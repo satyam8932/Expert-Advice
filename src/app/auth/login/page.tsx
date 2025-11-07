@@ -80,7 +80,7 @@ export default function LoginPage() {
                         />
 
                         <div className="flex items-center justify-between pt-2 pb-2">
-                            <Button type="button" variant="link" className="text-sm text-indigo-600 hover:text-indigo-700 p-0 h-auto font-semibold">
+                            <Button type="button" variant="link" className="text-sm text-indigo-600 hover:text-indigo-700 p-0 h-auto font-semibold" onClick={() => router.push('/auth/forgot-password')}>
                                 Forgot password?
                             </Button>
                         </div>

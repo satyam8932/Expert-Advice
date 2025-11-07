@@ -2,7 +2,7 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { supabaseServer } from '@/supabase/server';
 import { publicRoutes } from '@/lib/constants/publicRoutes';
 
-export async function middleware(req: NextRequest) {
+export async function proxy(req: NextRequest) {
     const res = NextResponse.next();
     const supabase = await supabaseServer();
 

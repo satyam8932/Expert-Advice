@@ -72,7 +72,7 @@ export default function UserDropdown({ user, onLogout }: UserDropdownProps) {
                     Help center
                 </DropdownMenuItem>
 
-                <DropdownMenuItem onClick={onLogout} className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-600 rounded-lg hover:bg-gray-50 cursor-pointer transition-colors">
+                <DropdownMenuItem onClick={onLogout} className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-red-500 rounded-lg cursor-pointer transition-colors hover:bg-red-50 hover:text-red-600 focus:bg-red-50 focus:text-red-600">
                     <LogOut className="h-4 w-4 text-red-500" />
                     Log out
                 </DropdownMenuItem>

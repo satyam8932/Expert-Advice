@@ -1,4 +1,3 @@
-import React from 'react';
 import { ArrowLeft } from 'lucide-react';
 import { AuthHeaderProps } from '@/lib/types/auth.types';
 import Link from 'next/link';
@@ -7,7 +6,7 @@ export default function AuthHeader({ title, subtitle, linkText, linkHref }: Auth
     return (
         <div className="mb-8">
             <div className="flex items-center justify-between mb-6">
-                <button className="text-gray-600 hover:text-gray-900 transition-colors p-2 hover:bg-gray-100 rounded-lg" aria-label="Go back">
+                <button onClick={() => window.history.back()} className="text-gray-600 hover:text-gray-900 transition-colors p-2 hover:bg-gray-100 rounded-lg" aria-label="Go back">
                     <ArrowLeft className="w-5 h-5" />
                 </button>
                 <div className="text-sm text-gray-600">
