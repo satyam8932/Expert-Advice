@@ -8,9 +8,14 @@ export const supabaseServer = async () => {
         cookies: {
             getAll: () => cookieStore.getAll(),
             setAll: (cookiesToSet) => {
-                cookiesToSet.forEach(({ name, value, options }) => {
-                    cookieStore.set(name, value, options);
-                });
+                try {
+                    cookiesToSet.forEach(({ name, value, options }) => {
+                        cookieStore.set(name, value, options);
+                    });
+                } catch {
+                    // Cookies can only be modified in Server Actions or Route Handlers
+                    // In Server Components, we can only read cookies
+                }
             },
         },
     });
