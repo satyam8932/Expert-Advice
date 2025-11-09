@@ -1,8 +1,15 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef, useCallback, memo } from 'react';
 import { Video, Square, Pause, Play, RotateCcw, Check, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useReactMediaRecorder } from 'react-media-recorder';
+import RecordingTimerOverlay from './RecordingTimerOverlay';
+
+const VideoPreview = memo(({ videoRef }: { videoRef: React.RefObject<HTMLVideoElement | null> }) => {
+    return <video key="live-preview" ref={videoRef} autoPlay muted playsInline className="w-full h-full object-contain" />;
+});
+
+VideoPreview.displayName = 'VideoPreview';
 
 interface VideoRecorderProps {
     onRecordingComplete: (file: File) => void;
@@ -10,8 +17,9 @@ interface VideoRecorderProps {
 }
 
 export default function VideoRecorder({ onRecordingComplete, onCancel }: VideoRecorderProps) {
-    const [timer, setTimer] = useState({ minutes: 0, seconds: 0 });
     const [isTimerRunning, setIsTimerRunning] = useState(false);
+    const videoRef = useRef<HTMLVideoElement>(null);
+    const streamRef = useRef<MediaStream | null>(null);
 
     const { status, startRecording, stopRecording, pauseRecording, resumeRecording, mediaBlobUrl, previewStream, clearBlobUrl, error } = useReactMediaRecorder({
         video: true,
@@ -21,49 +29,40 @@ export default function VideoRecorder({ onRecordingComplete, onCancel }: VideoRe
     });
 
     useEffect(() => {
-        let interval: NodeJS.Timeout;
-        if (isTimerRunning) {
-            interval = setInterval(() => {
-                setTimer((prev) => {
-                    const newSeconds = prev.seconds + 1;
-                    if (newSeconds === 60) {
-                        return { seconds: 0, minutes: prev.minutes + 1 };
-                    }
-                    return { ...prev, seconds: newSeconds };
-                });
-            }, 1000);
+        if (videoRef.current && previewStream) {
+            if (streamRef.current !== previewStream) {
+                streamRef.current = previewStream;
+                videoRef.current.srcObject = previewStream;
+            }
         }
-        return () => clearInterval(interval);
-    }, [isTimerRunning]);
+    }, [previewStream]);
 
-    const handleStartRecording = () => {
-        setTimer({ minutes: 0, seconds: 0 });
+    const handleStartRecording = useCallback(() => {
         setIsTimerRunning(true);
         startRecording();
-    };
+    }, [startRecording]);
 
-    const handleStopRecording = () => {
+    const handleStopRecording = useCallback(() => {
         setIsTimerRunning(false);
         stopRecording();
-    };
+    }, [stopRecording]);
 
-    const handlePauseRecording = () => {
+    const handlePauseRecording = useCallback(() => {
         setIsTimerRunning(false);
         pauseRecording();
-    };
+    }, [pauseRecording]);
 
-    const handleResumeRecording = () => {
+    const handleResumeRecording = useCallback(() => {
         setIsTimerRunning(true);
         resumeRecording();
-    };
+    }, [resumeRecording]);
 
-    const handleRetake = () => {
+    const handleRetake = useCallback(() => {
         clearBlobUrl();
-        setTimer({ minutes: 0, seconds: 0 });
         setIsTimerRunning(false);
-    };
+    }, [clearBlobUrl]);
 
-    const handleComplete = async () => {
+    const handleComplete = useCallback(async () => {
         if (mediaBlobUrl) {
             const response = await fetch(mediaBlobUrl);
             const blob = await response.blob();
@@ -72,11 +71,7 @@ export default function VideoRecorder({ onRecordingComplete, onCancel }: VideoRe
             });
             onRecordingComplete(file);
         }
-    };
-
-    const formatTime = (mins: number, secs: number) => {
-        return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
-    };
+    }, [mediaBlobUrl, onRecordingComplete]);
 
     if (error) {
         return (
@@ -92,28 +87,8 @@ export default function VideoRecorder({ onRecordingComplete, onCancel }: VideoRe
     return (
         <div className="space-y-4">
             <div className="relative aspect-video bg-gray-900 rounded-xl overflow-hidden">
-                {mediaBlobUrl ? (
-                    <video key={mediaBlobUrl} src={mediaBlobUrl} controls className="w-full h-full object-contain" />
-                ) : (
-                    <video
-                        ref={(video) => {
-                            if (video && previewStream) {
-                                video.srcObject = previewStream;
-                            }
-                        }}
-                        autoPlay
-                        muted
-                        playsInline
-                        className="w-full h-full object-contain"
-                    />
-                )}
-
-                {status === 'recording' && (
-                    <div className="absolute top-4 left-4 flex items-center gap-2 bg-red-600 text-white px-3 py-1.5 rounded-full">
-                        <div className="w-3 h-3 bg-white rounded-full animate-pulse" />
-                        <span className="text-sm font-semibold">{formatTime(timer.minutes, timer.seconds)}</span>
-                    </div>
-                )}
+                {mediaBlobUrl ? <video key={mediaBlobUrl} src={mediaBlobUrl} controls className="w-full h-full object-contain" /> : <VideoPreview videoRef={videoRef} />}
+                {status === 'recording' && <RecordingTimerOverlay isRunning={isTimerRunning} />}
             </div>
 
             <div className="flex gap-3">

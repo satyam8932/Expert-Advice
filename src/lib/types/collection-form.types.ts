@@ -7,7 +7,8 @@ export interface CollectionFormData {
     email: string;
     phone: string;
     countryCode: string;
-    videoFile: File | null;
+    videoUrl: string;
+    videoUploading: boolean;
 }
 
 export interface HelpOption {

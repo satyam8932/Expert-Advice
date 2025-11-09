@@ -8,6 +8,7 @@ import Step3Contact from './Step3Contact';
 import { CollectionFormData, StepConfig } from '@/lib/types/collection-form.types';
 import { ValidationErrors } from '@/lib/utils/validation';
 import { toast } from 'sonner';
+import { FormSubmitted } from './FormSubmitted';
 
 const steps: StepConfig[] = [
     { number: 1, title: 'Video', desc: 'Upload video' },
@@ -22,6 +23,7 @@ interface CollectionFormProps {
 export default function CollectionForm({ formId }: CollectionFormProps) {
     const [step, setStep] = useState(1);
     const [loading, setLoading] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
     const [errors, setErrors] = useState<ValidationErrors>({});
     const [formData, setFormData] = useState<CollectionFormData>({
         firstName: '',
@@ -32,7 +34,8 @@ export default function CollectionForm({ formId }: CollectionFormProps) {
         email: '',
         phone: '',
         countryCode: '+1',
-        videoFile: null,
+        videoUrl: '',
+        videoUploading: false,
     });
 
     const updateFormData = (key: keyof CollectionFormData, value: any) => {
@@ -48,38 +51,35 @@ export default function CollectionForm({ formId }: CollectionFormProps) {
         try {
             setLoading(true);
 
-            const submissionData = new FormData();
-            submissionData.append('formId', formId);
-            submissionData.append('firstName', formData.firstName);
-            submissionData.append('lastName', formData.lastName);
-            submissionData.append('zipcode', formData.zipcode);
-            submissionData.append('helpType', formData.helpType);
-            submissionData.append('contactMethod', formData.contactMethod);
-
-            if (formData.contactMethod === 'email') {
-                submissionData.append('email', formData.email);
-            } else {
-                submissionData.append('phone', formData.phone);
-                submissionData.append('countryCode', formData.countryCode);
-            }
-
-            if (formData.videoFile) {
-                submissionData.append('video', formData.videoFile);
-            }
+            const submissionData = {
+                formId,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                zipcode: formData.zipcode,
+                helpType: formData.helpType,
+                contactMethod: formData.contactMethod,
+                email: formData.contactMethod === 'email' ? formData.email : undefined,
+                phone: formData.contactMethod === 'phone' ? formData.phone : undefined,
+                countryCode: formData.contactMethod === 'phone' ? formData.countryCode : undefined,
+                videoUrl: formData.videoUrl,
+            };
 
             const response = await fetch('/api/submissions', {
                 method: 'POST',
-                body: submissionData,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(submissionData),
             });
 
+            const result = await response.json();
+
             if (!response.ok) {
-                throw new Error('Failed to submit form');
+                throw new Error(result.error || 'Failed to submit form');
             }
 
-            const result = await response.json();
             toast.success('Form submitted successfully!');
-            console.log('Submission result:', result);
-
+            setSubmitted(true);
             setLoading(false);
         } catch (error) {
             console.error('Submission error:', error);
@@ -87,6 +87,10 @@ export default function CollectionForm({ formId }: CollectionFormProps) {
             setLoading(false);
         }
     };
+
+    if (submitted) {
+        return <FormSubmitted />;
+    }
 
     return (
         <div className="w-full max-w-2xl mx-auto">
@@ -101,7 +105,7 @@ export default function CollectionForm({ formId }: CollectionFormProps) {
 
             <Card className="border border-gray-200 shadow-lg overflow-hidden">
                 <CardContent className="p-6 md:p-10">
-                    {step === 1 && <Step1Video formData={formData} onUpdate={updateFormData} onNext={() => setStep(2)} errors={errors} setErrors={setErrors} />}
+                    {step === 1 && <Step1Video formData={formData} onUpdate={updateFormData} onNext={() => setStep(2)} errors={errors} setErrors={setErrors} formId={formId} />}
 
                     {step === 2 && <Step2Details formData={formData} onUpdate={updateFormData} onNext={() => setStep(3)} onBack={() => setStep(1)} errors={errors} setErrors={setErrors} />}
 

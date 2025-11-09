@@ -66,7 +66,7 @@ export default function Step3Contact({ formData, onUpdate, onSubmit, onBack, loa
                     </div>
                     <div className="flex justify-between items-center py-2 border-b border-indigo-200/60">
                         <span className="text-sm font-medium text-indigo-700">Video</span>
-                        <span className="text-sm text-indigo-900 font-semibold truncate max-w-[180px]">{formData.videoFile?.name || 'Uploaded'}</span>
+                        <span className="text-sm text-indigo-900 font-semibold truncate max-w-[180px]">{'Uploaded'}</span>
                     </div>
                     <div className="flex justify-between items-center py-2">
                         <span className="text-sm font-medium text-indigo-700">Contact</span>

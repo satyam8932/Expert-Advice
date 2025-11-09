@@ -8,7 +8,7 @@ export interface ValidationErrors {
     contactMethod?: string;
     email?: string;
     phone?: string;
-    videoFile?: string;
+    videoUrl?: string;
 }
 
 export const validateEmail = (email: string): boolean => {
@@ -41,8 +41,8 @@ export const validateZipcode = (zipcode: string): boolean => {
 export const validateStep1 = (formData: CollectionFormData): ValidationErrors => {
     const errors: ValidationErrors = {};
 
-    if (!formData.videoFile) {
-        errors.videoFile = 'Please upload a video file';
+    if (!formData.videoUrl) {
+        errors.videoUrl = 'Please upload a video';
     }
 
     return errors;

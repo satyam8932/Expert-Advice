@@ -11,9 +11,10 @@ interface Step1VideoProps {
     onNext: () => void;
     errors: ValidationErrors;
     setErrors: (errors: ValidationErrors) => void;
+    formId: string;
 }
 
-export default function Step1Video({ formData, onUpdate, onNext, errors, setErrors }: Step1VideoProps) {
+export default function Step1Video({ formData, onUpdate, onNext, errors, setErrors, formId }: Step1VideoProps) {
     const handleNext = () => {
         const validationErrors = validateStep1(formData);
         if (Object.keys(validationErrors).length > 0) {
@@ -32,12 +33,22 @@ export default function Step1Video({ formData, onUpdate, onNext, errors, setErro
             </div>
 
             <div>
-                <VideoUploader file={formData.videoFile} onChange={(f) => onUpdate('videoFile', f)} />
-                {errors.videoFile && <p className="text-xs text-red-600 mt-2">{errors.videoFile}</p>}
+                <VideoUploader
+                    videoUrl={formData.videoUrl}
+                    isUploading={formData.videoUploading}
+                    onUploadStart={() => onUpdate('videoUploading', true)}
+                    onUploadComplete={(url) => {
+                        onUpdate('videoUrl', url);
+                        onUpdate('videoUploading', false);
+                    }}
+                    onUploadError={() => onUpdate('videoUploading', false)}
+                    formId={formId}
+                />
+                {errors.videoUrl && <p className="text-xs text-red-600 mt-2">{errors.videoUrl}</p>}
             </div>
 
             <div className="flex justify-end pt-4">
-                <Button onClick={handleNext} size="lg" className="bg-indigo-600 hover:bg-indigo-700 px-8 text-base font-semibold shadow-lg hover:shadow-xl transition-all">
+                <Button onClick={handleNext} disabled={formData.videoUploading || !formData.videoUrl} size="lg" className="bg-indigo-600 hover:bg-indigo-700 px-8 text-base font-semibold shadow-lg hover:shadow-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed">
                     Continue
                     <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
