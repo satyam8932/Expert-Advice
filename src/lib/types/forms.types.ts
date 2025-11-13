@@ -3,6 +3,6 @@ export interface FormType {
     user_id: string;
     name: string;
     submissions: number;
-    status: 'Active' | 'Completed';
+    status: 'active' | 'completed';
     created_at: string;
 }
