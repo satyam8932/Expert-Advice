@@ -2,7 +2,7 @@ import BillingWrapper from '@/components/billing/BillingWrapper';
 import { SubscriptionDetails, Invoice, PlanType, SubscriptionStatus } from '@/components/billing/BillingWidget';
 
 export const metadata = {
-    title: 'Billings | Box Rentail Now',
+    title: 'Billings | AdviceExpert.io',
 };
 
 async function getBillingData() {

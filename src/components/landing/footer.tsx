@@ -14,7 +14,7 @@ export function Footer() {
                                 <Ghost className="w-6 h-6 text-indigo-400" />
                             </div>
                             <span className="font-bold text-white tracking-tight text-xl">
-                                Box <span className="text-indigo-400">Rental</span> Now
+                                Advice<span className="text-indigo-400">Expert</span>.io
                             </span>
                         </Link>
                         <p className="text-gray-500 text-sm leading-relaxed max-w-sm">Automate your data intake with AI-powered video forms. Turn raw footage into actionable data and business insights instantly.</p>
@@ -69,7 +69,7 @@ export function Footer() {
 
                 {/* Bottom Bar: Copyright and Social Icons */}
                 <div className="pt-8 border-t border-white/5 flex flex-col md:flex-row items-center justify-between gap-4">
-                    <p className="text-gray-600 text-sm order-2 md:order-1">© {new Date().getFullYear()} Box Rental Now Inc. All rights reserved.</p>
+                    <p className="text-gray-600 text-sm order-2 md:order-1">© {new Date().getFullYear()} AdviceExpert.io Inc. All rights reserved.</p>
 
                     <div className="flex items-center gap-6 order-1 md:order-2">
                         <a href="#" className="text-gray-500 hover:text-indigo-400 transition-colors" aria-label="Twitter">

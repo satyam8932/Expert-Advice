@@ -1,7 +1,7 @@
 import DashboardWrapper from '@/components/dashboard/DashboardWrapper';
 
 export const metadata = {
-    title: 'Dashboard | Box Rentail Now',
+    title: 'Dashboard | AdviceExpert.io',
 };
 
 async function getDashboardData() {

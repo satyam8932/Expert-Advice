@@ -38,7 +38,7 @@ export default function Sidebar({ isCollapsed, onToggle }: { isCollapsed: boolea
                         <div className="flex items-center gap-2 w-full justify-center cursor-pointer">
                             {/* Replaced Fan with Ghost/Logo Icon for Brand Consistency */}
                             <Ghost className="w-8 h-8 text-indigo-400" />
-                            {!isCollapsed && <span className="text-xl font-bold text-white whitespace-nowrap transition-opacity duration-200">FormFlow</span>}
+                            {!isCollapsed && <span className="text-xl font-bold text-white whitespace-nowrap transition-opacity duration-200">Advice<span className='text-indigo-400'>Expert.io</span></span>}
                         </div>
                     </Link>
                 </div>

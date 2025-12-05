@@ -3,7 +3,7 @@ import { SubmissionDisplayData, SubmissionRow } from '@/lib/types/submission.typ
 import { supabaseServer } from '@/supabase/server';
 
 export const metadata = {
-    title: 'Submissions | Box Rentail Now',
+    title: 'Submissions | AdviceExpert.io',
 };
 
 export default async function SubmissionsPage() {

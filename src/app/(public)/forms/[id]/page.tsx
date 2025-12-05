@@ -21,7 +21,7 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => (
                 <div className="flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-sm">
                     <Ghost className="w-5 h-5 text-indigo-400" />
                     <span className="font-bold text-white tracking-tight">
-                        Box <span className="text-indigo-400">Rental</span> Now
+                        Advice<span className="text-indigo-400">Expert</span>.io
                     </span>
                 </div>
             </div>
@@ -30,7 +30,7 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => (
 
             <div className="mt-8 text-center">
                 <p className="text-xs text-gray-600 flex items-center justify-center gap-2">
-                    Powered by <span className="text-gray-400 font-medium">Box Rentail Now</span>
+                    Powered by <span className="text-gray-400 font-medium">AdviceExpert.io</span>
                     <span className="w-1 h-1 rounded-full bg-gray-700" />
                     <Link href="/privacy" className="hover:text-gray-400">
                         Privacy

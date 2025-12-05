@@ -16,7 +16,7 @@ export default function AuthSidebar({ stats }: AuthSidebarProps) {
             {/* Central Mockup (Placeholder for better image content) */}
             <div className="z-20 mb-10 w-full max-w-sm">
                 {/* Replace with your actual dashboard mockup image */}
-                <Image src="/01.svg" alt="Box Rentail Now Dashboard" width={350} height={350} className="object-contain" />
+                <Image src="/01.svg" alt="AdviceExpert.io Dashboard" width={350} height={350} className="object-contain" />
             </div>
 
             <div className="z-20 text-center">

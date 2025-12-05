@@ -6,7 +6,7 @@ import { Footer } from '@/components/landing/footer';
 import { Navbar } from '@/components/landing/navbar';
 
 export const metadata = {
-    title: 'Box Rentail Now | Automated Video Data Intake & Analysis',
+    title: 'AdviceExpert.io | Automated Video Data Intake & Analysis',
     description: 'Capture video, auto-transcribe to JSON/Markdown, and detect objects instantly.',
 };
 

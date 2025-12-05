@@ -10,8 +10,8 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-    title: 'Box Rental Now',
-    description: 'Box rental now',
+    title: 'AdviceExpert.io',
+    description: 'AdviceExpert.io',
 };
 
 export default function RootLayout({
