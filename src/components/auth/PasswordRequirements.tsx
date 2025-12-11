@@ -23,8 +23,8 @@ export default function PasswordRequirements({ password }: PasswordRequirementsP
         <div className="mb-6 space-y-2">
             {requirements.map((req, index) => (
                 <div key={index} className="flex items-center space-x-2 text-sm">
-                    <Check className={`w-4 h-4 transition-colors ${req.met ? 'text-green-500' : 'text-gray-300'}`} />
-                    <span className={`transition-colors ${req.met ? 'text-green-600' : 'text-gray-500'}`}>{req.text}</span>
+                    <Check className={`w-4 h-4 transition-colors ${req.met ? 'text-green-500' : 'text-muted-foreground'}`} />
+                    <span className={`transition-colors ${req.met ? 'text-green-600 dark:text-green-500' : 'text-muted-foreground'}`}>{req.text}</span>
                 </div>
             ))}
         </div>

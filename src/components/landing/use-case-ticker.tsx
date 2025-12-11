@@ -2,7 +2,7 @@
 
 import { motion } from 'framer-motion';
 
-const brands = ['Insurance Claims', 'Field Inspections', 'E-commerce Returns', 'Tele-medicine', 'Construction Audits', 'Real Estate Walkthroughs', 'Logistics Tracking', 'Equipment Rental', 'Customer Onboarding'];
+const brands = ['Insurance Claims', 'Pest Control', 'Construction Audits', 'Contractors', 'Logistics Tracking', 'Equipment Rental', 'Movers', 'Storage', 'Restoration', 'Home Services'];
 
 export function UseCaseTicker() {
     return (

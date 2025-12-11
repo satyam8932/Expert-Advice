@@ -38,9 +38,9 @@ const getPlanGradient = (plan: PlanType) => {
 
 export function PlanDetailsCard({ subscription }: { subscription: SubscriptionDetails }) {
     return (
-        <Card className="bg-[#0A0A0A] border border-white/10 shadow-xl shadow-black/20 flex flex-col h-full">
+        <Card className="bg-card border border-border shadow-xl flex flex-col h-full">
             <CardHeader className="border-b border-white/5 pb-4">
-                <CardTitle className="text-lg font-medium text-white flex items-center justify-between">
+                <CardTitle className="text-lg font-medium text-foreground flex items-center justify-between">
                     Current Plan
                     <Badge variant="outline" className={`capitalize ${subscription.status === 'active' ? 'text-green-400 border-green-500/30 bg-green-500/10' : 'text-red-400 border-red-500/30 bg-red-500/10'}`}>
                         {subscription.status.replace('_', ' ')}
@@ -65,13 +65,13 @@ export function PlanDetailsCard({ subscription }: { subscription: SubscriptionDe
                             <span className="text-gray-400 flex items-center gap-2">
                                 <Clock className="w-4 h-4" /> Next billing date
                             </span>
-                            <span className="font-medium text-white">{subscription.nextBillingDate || 'N/A'}</span>
+                            <span className="font-medium text-foreground">{subscription.nextBillingDate || 'N/A'}</span>
                         </div>
                         <div className="flex items-center justify-between text-sm py-3 border-b border-white/5">
                             <span className="text-gray-400 flex items-center gap-2">
                                 <CreditCard className="w-4 h-4" /> Payment method
                             </span>
-                            <span className="font-medium text-white">{subscription.paymentMethod || '•••• •••• •••• ••••'}</span>
+                            <span className="font-medium text-foreground">{subscription.paymentMethod || '•••• •••• •••• ••••'}</span>
                         </div>
                     </div>
 
@@ -84,9 +84,9 @@ export function PlanDetailsCard({ subscription }: { subscription: SubscriptionDe
 
 export function InvoiceHistoryCard({ invoices }: { invoices: Invoice[] }) {
     return (
-        <Card className="bg-[#0A0A0A] border border-white/10 shadow-xl shadow-black/20 flex flex-col h-full">
+        <Card className="bg-card border border-border shadow-xl flex flex-col h-full">
             <CardHeader className="border-b border-white/5 pb-4">
-                <CardTitle className="text-lg font-medium text-white">Recent Invoices</CardTitle>
+                <CardTitle className="text-lg font-medium text-foreground">Recent Invoices</CardTitle>
             </CardHeader>
             <CardContent className="p-2 overflow-y-auto custom-scrollbar">
                 <div className="space-y-3">
@@ -98,7 +98,7 @@ export function InvoiceHistoryCard({ invoices }: { invoices: Invoice[] }) {
                                 <div className="flex items-center gap-3">
                                     <div className={`p-2 rounded-lg ${invoice.status === 'paid' ? 'bg-green-500/10 text-green-400' : 'bg-yellow-500/10 text-yellow-400'}`}>{invoice.status === 'paid' ? <CheckCircle className="w-4 h-4" /> : <AlertTriangle className="w-4 h-4" />}</div>
                                     <div>
-                                        <p className="text-sm font-semibold text-white">{invoice.amount}</p>
+                                        <p className="text-sm font-semibold text-foreground">{invoice.amount}</p>
                                         <p className="text-xs text-gray-500">{invoice.date}</p>
                                     </div>
                                 </div>

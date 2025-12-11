@@ -10,7 +10,7 @@ interface BillingWrapperProps {
 
 export default function BillingWrapper({ subscription, invoices }: BillingWrapperProps) {
     return (
-        <div className="flex flex-col p-2 gap-8 overflow-hidden">
+        <div className="flex flex-col p-2 gap-8 overflow-visible">
             <div className="shrink-0">
                 <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-white to-gray-500">Billings</h1>
                 <p className="text-gray-500 mt-1 flex items-center gap-2">

@@ -20,12 +20,12 @@ export default function FormWrapper({ initialForms }: FormWrapperProps) {
     }, [initialForms, setForms]);
 
     return (
-        <div className="flex flex-col p-2 gap-8 overflow-hidden">
+        <div className="flex flex-col p-2 gap-8">
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shrink-0">
                 {/* Title and Subtitle */}
                 <div>
-                    <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-white to-gray-500">Forms</h1>
-                    <p className="text-gray-500 mt-1 flex items-center gap-2">
+                    <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-foreground to-muted-foreground">Forms</h1>
+                    <p className="text-muted-foreground mt-1 flex items-center gap-2">
                         <FileText className="w-4 h-4 text-gray-600" />
                         Manage and monitor all Data Intake Forms
                     </p>
