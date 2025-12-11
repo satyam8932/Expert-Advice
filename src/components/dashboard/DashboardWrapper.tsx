@@ -18,10 +18,10 @@ interface DashboardData {
 
 export default function DashboardWrapper({ data }: { data: DashboardData }) {
     return (
-        <div className="flex flex-col p-2 gap-8 overflow-hidden">
+        <div className="flex flex-col p-2 gap-8 overflow-visible">
             <div className="shrink-0">
-                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-white to-gray-500">Overview</h1>
-                <p className="text-gray-500 mt-1">Welcome back! Analyze your AI data intake performance.</p>
+                <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-foreground to-muted-foreground">Overview</h1>
+                <p className="text-muted-foreground mt-1">Welcome back! Analyze your AI data intake performance.</p>
             </div>
 
             <div className="flex-1 space-y-8">

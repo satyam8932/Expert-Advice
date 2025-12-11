@@ -11,7 +11,7 @@ export default function InputField({ type = 'text', placeholder, value, onChange
     return (
         <div className="relative w-full group mb-4">
             <div className="absolute left-4 top-1/2 -translate-y-1/2 z-10 pointer-events-none">
-                <Icon className={cn('w-5 h-5 transition-colors', validated && 'text-green-500', error && 'text-red-500', !validated && !error && 'text-gray-400 group-focus-within:text-indigo-600')} />
+                <Icon className={cn('w-5 h-5 transition-colors', validated && 'text-green-500', error && 'text-red-500', !validated && !error && 'text-muted-foreground group-focus-within:text-indigo-500')} />
             </div>
 
             <Input
@@ -21,12 +21,12 @@ export default function InputField({ type = 'text', placeholder, value, onChange
                 value={value}
                 onChange={onChange}
                 className={cn(
-                    'h-14 pl-12 pr-12 text-base border-2 rounded-xl',
+                    'h-14 pl-12 pr-12 text-base border-2 rounded-xl bg-background',
                     'focus-visible:ring-0 focus-visible:ring-offset-0',
                     'transition-all duration-200',
-                    validated && 'border-green-500 bg-green-50/30 focus-visible:border-green-600',
-                    error && 'border-red-500 bg-red-50/30 focus-visible:border-red-600',
-                    !validated && !error && 'border-gray-200 focus-visible:border-indigo-500'
+                    validated && 'border-green-500 bg-green-500/10 focus-visible:border-green-600',
+                    error && 'border-red-500 bg-red-500/10 focus-visible:border-red-600',
+                    !validated && !error && 'border-border focus-visible:border-indigo-500'
                 )}
             />
 
@@ -37,7 +37,7 @@ export default function InputField({ type = 'text', placeholder, value, onChange
             )}
 
             {showPasswordToggle && (
-                <button type="button" onClick={onTogglePassword} className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-700 transition-colors p-1 rounded-md hover:bg-gray-100" tabIndex={-1}>
+                <button type="button" onClick={onTogglePassword} className="absolute right-4 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition-colors p-1 rounded-md hover:bg-muted" tabIndex={-1}>
                     {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
                 </button>
             )}

@@ -86,7 +86,7 @@ export default async function DashboardPage() {
     const data = await getDashboardData();
 
     return (
-        <div className="bg-[#030303] text-gray-200">
+        <div className="bg-background text-foreground">
             <DashboardWrapper data={data} />
         </div>
     );

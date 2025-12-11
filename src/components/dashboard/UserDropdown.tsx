@@ -27,48 +27,48 @@ export default function UserDropdown({ user, onLogout }: UserDropdownProps) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="flex items-center gap-2 px-2 py-1.5 h-auto rounded-full text-gray-300 hover:bg-white/5 hover:text-white transition-colors">
+                <Button variant="ghost" className="flex items-center gap-2 px-2 py-1.5 h-auto rounded-full text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
                     <Avatar className="h-8 w-8">
                         <AvatarImage src={avatarUrl} alt={user.name} />
-                        <AvatarFallback className="bg-linear-to-br from-indigo-600 to-purple-600 text-white text-xs sm:text-sm font-semibold">{initials}</AvatarFallback>
+                        <AvatarFallback className="bg-linear-to-br from-indigo-600 to-purple-600 text-foreground text-xs sm:text-sm font-semibold">{initials}</AvatarFallback>
                     </Avatar>
                     <ChevronDown className="h-4 w-4 text-gray-500 hidden sm:block" />
                 </Button>
             </DropdownMenuTrigger>
 
-            <DropdownMenuContent align="end" className="w-64 p-1 bg-[#1A1A1A] backdrop-blur-sm border border-white/10 shadow-lg rounded-xl" sideOffset={8}>
+            <DropdownMenuContent align="end" className="w-64 p-1 bg-popover backdrop-blur-sm border border-border shadow-lg rounded-xl" sideOffset={8}>
                 <div className="flex items-center gap-3 px-2 py-3 mb-2">
                     <Avatar className="h-10 w-10">
                         <AvatarImage src={avatarUrl} alt={user.name} />
                         <AvatarFallback className="bg-linear-to-br from-indigo-600 to-purple-600 text-white text-sm font-semibold">{initials}</AvatarFallback>
                     </Avatar>
                     <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-white truncate">{user.name}</p>
-                        <p className="text-xs text-gray-400 truncate">{user.email}</p>
+                        <p className="text-sm font-medium text-foreground truncate">{user.name}</p>
+                        <p className="text-xs text-muted-foreground truncate">{user.email}</p>
                     </div>
                 </div>
 
-                <DropdownMenuSeparator className="bg-white/10" />
+                <DropdownMenuSeparator className="bg-border" />
 
-                <DropdownMenuItem onClick={() => router.push('/dashboard')} className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-300 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
-                    <LayoutDashboard className="h-4 w-4 text-gray-500" />
+                <DropdownMenuItem onClick={() => router.push('/dashboard')} className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground rounded-lg hover:bg-accent cursor-pointer transition-colors">
+                    <LayoutDashboard className="h-4 w-4 text-muted-foreground" />
                     Dashboard
                 </DropdownMenuItem>
 
-                <DropdownMenuItem onClick={() => router.push('/dashboard/billings')} className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-300 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
-                    <CreditCard className="h-4 w-4 text-gray-500" />
+                <DropdownMenuItem onClick={() => router.push('/dashboard/billings')} className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground rounded-lg hover:bg-accent cursor-pointer transition-colors">
+                    <CreditCard className="h-4 w-4 text-muted-foreground" />
                     Billings
                 </DropdownMenuItem>
 
-                <DropdownMenuItem onClick={() => router.push('/dashboard/settings')} className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-300 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
-                    <Settings className="h-4 w-4 text-gray-500" />
+                <DropdownMenuItem onClick={() => router.push('/dashboard/settings')} className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground rounded-lg hover:bg-accent cursor-pointer transition-colors">
+                    <Settings className="h-4 w-4 text-muted-foreground" />
                     Settings
                 </DropdownMenuItem>
 
-                <DropdownMenuSeparator className="bg-white/10 my-2" />
+                <DropdownMenuSeparator className="bg-border my-2" />
 
-                <DropdownMenuItem onClick={() => router.push('/help')} className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-gray-300 rounded-lg hover:bg-white/5 cursor-pointer transition-colors">
-                    <HelpCircle className="h-4 w-4 text-gray-500" />
+                <DropdownMenuItem onClick={() => router.push('/help')} className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground rounded-lg hover:bg-accent cursor-pointer transition-colors">
+                    <HelpCircle className="h-4 w-4 text-muted-foreground" />
                     Help center
                 </DropdownMenuItem>
 

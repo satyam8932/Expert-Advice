@@ -32,7 +32,7 @@ export default async function BillingsPage() {
     const data = await getBillingData();
 
     return (
-        <div className="bg-[#030303] text-gray-200">
+        <div className="bg-background text-foreground">
             <BillingWrapper subscription={data.subscription} invoices={data.invoices} />
         </div>
     );

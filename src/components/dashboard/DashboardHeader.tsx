@@ -50,14 +50,14 @@ export default function DashboardHeader({ isCollapsed, onToggle }: DashboardHead
     };
 
     return (
-        <header className={cn('fixed top-0 right-0 z-30 bg-[#0A0A0A] border-b border-white/10 transition-all duration-300', isCollapsed ? 'lg:left-20' : 'lg:left-64', 'left-0')}>
+        <header className={cn('fixed top-0 right-0 z-30 bg-background border-b border-border transition-all duration-300', isCollapsed ? 'lg:left-20' : 'lg:left-64', 'left-0')}>
             <div className="px-4 py-3 lg:px-6">
                 <div className="flex items-center justify-between gap-4">
                     <div className="flex items-center gap-3 flex-1">
-                        <Button variant="ghost" size="icon" className="shrink-0 text-gray-400 hover:bg-white/5 hover:text-white" onClick={onToggle}>
+                        <Button variant="ghost" size="icon" className="shrink-0 text-gray-400 hover:bg-white/5 hover:text-foreground" onClick={onToggle}>
                             {isCollapsed ? <PanelLeft className="w-5 h-5" /> : <PanelLeftClose className="w-5 h-5" />}
                         </Button>
-                        <h1 className="text-lg sm:text-2xl font-bold truncate bg-clip-text text-transparent bg-linear-to-r from-white to-gray-400">Dashboard</h1>
+                        <h1 className="text-2xl font-bold bg-clip-text text-transparent bg-linear-to-r from-foreground to-muted-foreground">Welcome</h1>
                     </div>
 
                     <div className="flex items-center h-10">
