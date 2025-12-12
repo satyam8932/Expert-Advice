@@ -38,13 +38,13 @@ export default function DeleteSubmissionButton({ submissionId, videoUrl, jsonRes
                     <Trash2 className="w-4 h-4" />
                 </Button>
             </AlertDialogTrigger>
-            <AlertDialogContent className="bg-[#0A0A0A] border border-white/10">
+            <AlertDialogContent className="bg-card border border-border">
                 <AlertDialogHeader>
-                    <AlertDialogTitle className="text-white">Are you sure?</AlertDialogTitle>
-                    <AlertDialogDescription className="text-gray-400">This will permanently delete this submission and all associated files (video, JSON, markdown). This action cannot be undone.</AlertDialogDescription>
+                    <AlertDialogTitle className="text-foreground">Are you sure?</AlertDialogTitle>
+                    <AlertDialogDescription className="text-muted-foreground">This will permanently delete this submission and all associated files (video, JSON, markdown). This action cannot be undone.</AlertDialogDescription>
                 </AlertDialogHeader>
                 <AlertDialogFooter>
-                    <AlertDialogCancel className="bg-white/5 border-white/10 hover:bg-white/10 text-gray-300" disabled={isDeleting}>
+                    <AlertDialogCancel className="bg-muted border-border hover:bg-muted/80 text-foreground" disabled={isDeleting}>
                         Cancel
                     </AlertDialogCancel>
                     <AlertDialogAction

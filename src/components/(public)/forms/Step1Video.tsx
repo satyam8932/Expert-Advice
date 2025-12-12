@@ -31,10 +31,10 @@ export default function Step1Video({ formData, onUpdate, onNext, errors, setErro
         <div className="space-y-10 animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="text-center">
                 <div className="inline-flex items-center justify-center p-3 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-3">
-                    <Video className="w-6 h-6 text-indigo-400" />
+                    <Video className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-2">Step 1: Upload Video Evidence</h2>
-                <p className="text-gray-400 max-w-sm mx-auto">A quick video helps our AI analyze damage, dimensions, or details instantly.</p>
+                <h2 className="text-2xl font-bold text-foreground mb-2">Step 1: Upload Video Evidence</h2>
+                <p className="text-muted-foreground max-w-sm mx-auto">A quick video helps our AI analyze damage, dimensions, or details instantly.</p>
             </div>
 
             <div className="space-y-4">
@@ -52,22 +52,22 @@ export default function Step1Video({ formData, onUpdate, onNext, errors, setErro
 
                 {errors.videoUrl && (
                     <div className="flex items-center justify-center text-sm">
-                        <p className="text-sm font-medium text-red-500 bg-red-950/20 border border-red-500/20 rounded-lg px-4 py-2 mt-2 w-fit">{errors.videoUrl}</p>
+                        <p className="text-sm font-medium text-red-600 dark:text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg px-4 py-2 mt-2 w-fit">{errors.videoUrl}</p>
                     </div>
                 )}
             </div>
 
             <div className="space-y-4">
-                <div className="flex items-center justify-between text-gray-500">
+                <div className="flex items-center justify-between text-muted-foreground">
                     <div className="text-sm font-medium">Video Status:</div>
                     <div className="flex items-center gap-2">
-                        {formData.videoUploading && <span className="text-yellow-400 text-sm animate-pulse">Processing...</span>}
+                        {formData.videoUploading && <span className="text-yellow-500 dark:text-yellow-400 text-sm animate-pulse">Processing...</span>}
                         {isVideoReady && (
-                            <span className="text-green-400 text-sm flex items-center gap-1">
+                            <span className="text-green-600 dark:text-green-400 text-sm flex items-center gap-1">
                                 <FileText className="w-4 h-4" /> Ready for Analysis
                             </span>
                         )}
-                        {!formData.videoUrl && !formData.videoUploading && <span className="text-gray-500 text-sm">Awaiting Upload</span>}
+                        {!formData.videoUrl && !formData.videoUploading && <span className="text-muted-foreground text-sm">Awaiting Upload</span>}
                     </div>
                 </div>
 

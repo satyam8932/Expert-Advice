@@ -24,14 +24,14 @@ export default function MobileVideoCapture({ onVideoCapture, onCancel }: MobileV
 
     return (
         <div className="space-y-4">
-            <div className="border-2 border-dashed border-indigo-300 bg-indigo-50 rounded-xl p-8 text-center">
+            <div className="border-2 border-dashed border-indigo-500/30 bg-indigo-500/10 rounded-xl p-8 text-center">
                 <div className="flex flex-col items-center gap-4">
                     <div className="p-4 bg-indigo-600 rounded-full">
                         <Camera className="w-10 h-10 text-white" />
                     </div>
                     <div>
-                        <p className="text-lg font-semibold text-gray-900 mb-1">Record Video</p>
-                        <p className="text-sm text-gray-600">Tap below to open your camera</p>
+                        <p className="text-lg font-semibold text-foreground mb-1">Record Video</p>
+                        <p className="text-sm text-muted-foreground">Tap below to open your camera</p>
                     </div>
                 </div>
             </div>

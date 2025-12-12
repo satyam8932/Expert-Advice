@@ -24,7 +24,7 @@ const getStatusStyle = (status: SubmissionStatus) => {
         case 'failed':
             return 'bg-red-500/10 text-red-400 border border-red-500/20';
         default:
-            return 'bg-gray-800 text-gray-400';
+            return 'bg-muted text-muted-foreground';
     }
 };
 
@@ -42,7 +42,7 @@ const getStatusIcon = (status: SubmissionStatus) => {
 const extractDataValue = (data: Record<string, any>, key: string) => {
     const value = data[key];
     if (value === undefined || value === null || value === '') {
-        return <span className="text-gray-600 font-normal">N/A</span>;
+        return <span className="text-muted-foreground font-normal">N/A</span>;
     }
     return typeof value === 'object' ? JSON.stringify(value, null, 2) : String(value);
 };
@@ -97,19 +97,21 @@ export default function SubmissionsTable({ search = '' }: SubmissionsTableProps)
                                 filteredSubmissions.map((submission) => {
                                     const isExpanded = expandedRows.has(submission.id);
                                     const fullName = (submission.data.first_name || '') + ' ' + (submission.data.last_name || '');
-                                    const email = extractDataValue(submission.data, 'email');
+                                    const email = submission.data.email;
+                                    const phone = submission.data.phone;
+                                    const contactInfo = email || phone || 'N/A';
 
                                     return (
                                         <React.Fragment key={submission.id}>
                                             <tr className="group hover:bg-muted/50 transition-colors">
                                                 <td className="px-6 py-4 hidden lg:table-cell">
-                                                    <div className="font-mono text-xs text-gray-500">{submission.id.substring(0, 8)}</div>
+                                                    <div className="font-mono text-xs text-muted-foreground">{submission.id.substring(0, 8)}</div>
                                                 </td>
 
                                                 <td className="px-6 py-4 max-w-sm">
                                                     <div className="flex flex-col">
                                                         <span className="font-medium text-foreground capitalize">{fullName || <span className="text-muted-foreground font-normal">N/A</span>}</span>
-                                                        <span className="text-xs text-gray-500">{email}</span>
+                                                        <span className="text-xs text-muted-foreground">{contactInfo}</span>
                                                     </div>
                                                 </td>
 
@@ -120,13 +122,13 @@ export default function SubmissionsTable({ search = '' }: SubmissionsTableProps)
                                                     </Badge>
                                                 </td>
 
-                                                <td className="px-6 py-4 text-xs text-gray-500 hidden sm:table-cell">
+                                                <td className="px-6 py-4 text-xs text-muted-foreground hidden sm:table-cell">
                                                     <div className="flex flex-col gap-0.5">
                                                         <span className="flex items-center gap-1">
-                                                            <Calendar className="w-3 h-3 text-gray-600" />
+                                                            <Calendar className="w-3 h-3 text-muted-foreground" />
                                                             {format(new Date(submission.createdAt), 'MMM dd, yyyy HH:mm')}
                                                         </span>
-                                                        <span className="text-[10px] text-gray-500">Processed: {submission.processedAt ? format(new Date(submission.processedAt), 'HH:mm') : '-'}</span>
+                                                        <span className="text-[10px] text-muted-foreground">Processed: {submission.processedAt ? format(new Date(submission.processedAt), 'HH:mm') : '-'}</span>
                                                     </div>
                                                 </td>
 
@@ -136,10 +138,10 @@ export default function SubmissionsTable({ search = '' }: SubmissionsTableProps)
                                                         {submission.videoUrl ? (
                                                             <Link href={submission.videoUrl} target="_blank" className="text-indigo-400 hover:text-foreground transition-colors flex flex-col items-center group/asset" title="View Video">
                                                                 <Video className="w-4 h-4" />
-                                                                <span className="text-[10px] text-gray-500 group-hover/asset:text-indigo-400">Video</span>
+                                                                <span className="text-[10px] text-muted-foreground group-hover/asset:text-indigo-400">Video</span>
                                                             </Link>
                                                         ) : (
-                                                            <span className="flex flex-col items-center text-gray-700" title="No Video">
+                                                            <span className="flex flex-col items-center text-muted-foreground" title="No Video">
                                                                 <Video className="w-4 h-4 opacity-50" />
                                                                 <span className="text-[10px]">N/A</span>
                                                             </span>
@@ -149,10 +151,10 @@ export default function SubmissionsTable({ search = '' }: SubmissionsTableProps)
                                                         {submission.jsonResultUrl ? (
                                                             <Link href={submission.jsonResultUrl} target="_blank" className="text-green-400 hover:text-foreground transition-colors flex flex-col items-center group/asset" title="View JSON Output">
                                                                 <FileJson className="w-4 h-4" />
-                                                                <span className="text-[10px] text-gray-500 group-hover/asset:text-green-400">JSON</span>
+                                                                <span className="text-[10px] text-muted-foreground group-hover/asset:text-green-400">JSON</span>
                                                             </Link>
                                                         ) : (
-                                                            <span className="flex flex-col items-center text-gray-700" title="No JSON">
+                                                            <span className="flex flex-col items-center text-muted-foreground" title="No JSON">
                                                                 <FileJson className="w-4 h-4 opacity-50" />
                                                                 <span className="text-[10px]">N/A</span>
                                                             </span>
@@ -162,10 +164,10 @@ export default function SubmissionsTable({ search = '' }: SubmissionsTableProps)
                                                         {submission.markdownUrl ? (
                                                             <Link href={submission.markdownUrl} target="_blank" className="text-blue-400 hover:text-foreground transition-colors flex flex-col items-center group/asset" title="View Markdown">
                                                                 <FileCode className="w-4 h-4" />
-                                                                <span className="text-[10px] text-gray-500 group-hover/asset:text-blue-400">MD</span>
+                                                                <span className="text-[10px] text-muted-foreground group-hover/asset:text-blue-400">MD</span>
                                                             </Link>
                                                         ) : (
-                                                            <span className="flex flex-col items-center text-gray-700" title="No Markdown">
+                                                            <span className="flex flex-col items-center text-muted-foreground" title="No Markdown">
                                                                 <FileCode className="w-4 h-4 opacity-50" />
                                                                 <span className="text-[10px]">N/A</span>
                                                             </span>
@@ -188,7 +190,7 @@ export default function SubmissionsTable({ search = '' }: SubmissionsTableProps)
                                             {isExpanded && (
                                                 <tr className="bg-muted/50 border-b border-border animate-in fade-in slide-in-from-top-2 duration-300">
                                                     <td colSpan={7} className="px-6 py-4">
-                                                        <div className="bg-black/40 rounded-lg p-5 border border-white/10">
+                                                        <div className="bg-muted/50 rounded-lg p-5 border border-border">
                                                             {/* --- Heading --- */}
                                                             <h4 className="text-xs font-semibold text-indigo-400 uppercase mb-3 flex items-center gap-2">
                                                                 <Zap className="w-4 h-4" /> Structured Data & Transcript
@@ -203,7 +205,7 @@ export default function SubmissionsTable({ search = '' }: SubmissionsTableProps)
 
                                                                         return (
                                                                             <div key={key} className="flex flex-col">
-                                                                                <span className="text-[11px] font-medium text-gray-500 capitalize mb-1">{displayKey}</span>
+                                                                                <span className="text-[11px] font-medium text-muted-foreground capitalize mb-1">{displayKey}</span>
                                                                                 <div className="text-sm text-foreground bg-muted px-3 py-2 rounded border border-border truncate">{displayValue}</div>
                                                                             </div>
                                                                         );
@@ -212,11 +214,11 @@ export default function SubmissionsTable({ search = '' }: SubmissionsTableProps)
 
                                                                 {/* Raw Transcript Content (Takes 1/3rd space on large screen) */}
                                                                 <div className="lg:col-span-1 flex flex-col">
-                                                                    <span className="text-[11px] font-medium text-gray-500 capitalize mb-1 flex items-center gap-1">
+                                                                    <span className="text-[11px] font-medium text-muted-foreground capitalize mb-1 flex items-center gap-1">
                                                                         <ScrollText className="w-3 h-3" /> Raw Transcript
                                                                     </span>
-                                                                    <div className="text-sm text-gray-300 bg-black/40 p-3 rounded border border-white/5 h-32 overflow-y-auto font-sans leading-relaxed">
-                                                                        {submission.transcript || <span className="text-gray-600">Transcript not yet generated.</span>}
+                                                                    <div className="text-sm text-foreground bg-muted p-3 rounded border border-border h-66 overflow-y-auto font-sans leading-relaxed">
+                                                                        {submission.transcript || <span className="text-muted-foreground">Transcript not yet generated.</span>}
                                                                     </div>
                                                                 </div>
                                                             </div>

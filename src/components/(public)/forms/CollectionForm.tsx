@@ -95,13 +95,13 @@ export default function CollectionForm({ formId }: CollectionFormProps) {
     return (
         <div className="w-full">
             <div className="mb-10 text-center">
-                <h1 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-linear-to-r from-indigo-400 to-purple-400 mb-3">Submit Your Intake Request</h1>
-                <p className="text-gray-400 text-lg">Get AI-Powered Analysis</p>
+                <h1 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500 mb-3">Submit Your Intake Request</h1>
+                <p className="text-muted-foreground text-lg">Get AI-Powered Analysis</p>
             </div>
 
             <StepIndicator steps={steps} currentStep={step} />
 
-            <Card className="bg-[#0A0A0A] border border-white/10 shadow-xl shadow-black/30 overflow-hidden mt-6">
+            <Card className="bg-card border border-border shadow-xl mt-6">
                 <CardContent className="p-6 md:p-10">
                     {step === 1 && <Step1Video formData={formData} onUpdate={updateFormData} onNext={() => setStep(2)} errors={errors} setErrors={setErrors} formId={formId} />}
 

@@ -16,21 +16,21 @@ interface StatusMessageProps {
 const statusConfig = {
     error: {
         icon: XCircle,
-        bgColor: 'bg-red-950/20',
-        borderColor: 'border-red-600/50',
-        iconBg: 'bg-red-800/30',
-        iconColor: 'text-red-400',
-        headingColor: 'text-white',
-        contentColor: 'text-red-300',
+        bgColor: 'bg-red-500/10',
+        borderColor: 'border-red-500/30',
+        iconBg: 'bg-red-500/20',
+        iconColor: 'text-red-500',
+        headingColor: 'text-foreground',
+        contentColor: 'text-red-600 dark:text-red-400',
     },
     'not-found': {
         icon: AlertCircle,
-        bgColor: 'bg-white/5',
-        borderColor: 'border-indigo-600/30',
-        iconBg: 'bg-indigo-600/20',
-        iconColor: 'text-indigo-400',
-        headingColor: 'text-white',
-        contentColor: 'text-gray-400',
+        bgColor: 'bg-muted/30',
+        borderColor: 'border-indigo-500/30',
+        iconBg: 'bg-indigo-500/20',
+        iconColor: 'text-indigo-500 dark:text-indigo-400',
+        headingColor: 'text-foreground',
+        contentColor: 'text-muted-foreground',
     },
 };
 

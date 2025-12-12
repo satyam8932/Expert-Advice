@@ -34,29 +34,29 @@ export default function Step2Details({ formData, onUpdate, onNext, onBack, error
     };
 
     const inputClasses = (key: keyof ValidationErrors) =>
-        `h-11 text-base bg-white/5 border text-white placeholder:text-gray-600 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-0 transition-colors ${errors[key] ? 'border-red-500 ring-red-500' : 'border-white/10 focus:border-indigo-500/50'}`;
+        `h-11 text-base bg-background border text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-0 transition-colors ${errors[key] ? 'border-red-500 ring-red-500' : 'border-border focus:border-indigo-500/50'}`;
 
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="text-center">
                 <div className="inline-flex items-center justify-center p-3 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-3">
-                    <Info className="w-6 h-6 text-indigo-400" />
+                    <Info className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-2">Step 2: Basic Details</h2>
-                <p className="text-gray-400 max-w-sm mx-auto">Tell us who you are and what you need assistance with.</p>
+                <h2 className="text-2xl font-bold text-foreground mb-2">Step 2: Basic Details</h2>
+                <p className="text-muted-foreground max-w-sm mx-auto">Tell us who you are and what you need assistance with.</p>
             </div>
 
             <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="space-y-2">
-                        <Label htmlFor="firstName" className="text-sm font-medium text-gray-300">
+                        <Label htmlFor="firstName" className="text-sm font-medium text-foreground">
                             First Name <span className="text-red-500">*</span>
                         </Label>
                         <Input id="firstName" value={formData.firstName} onChange={(e) => onUpdate('firstName', e.target.value)} placeholder="John" className={inputClasses('firstName')} />
                         {errors.firstName && <p className="text-xs text-red-500 mt-1">{errors.firstName}</p>}
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="lastName" className="text-sm font-medium text-gray-300">
+                        <Label htmlFor="lastName" className="text-sm font-medium text-foreground">
                             Last Name <span className="text-red-500">*</span>
                         </Label>
                         <Input id="lastName" value={formData.lastName} onChange={(e) => onUpdate('lastName', e.target.value)} placeholder="Doe" className={inputClasses('lastName')} />
@@ -65,7 +65,7 @@ export default function Step2Details({ formData, onUpdate, onNext, onBack, error
                 </div>
 
                 <div className="space-y-2">
-                    <Label htmlFor="zipcode" className="text-sm font-medium text-gray-300">
+                    <Label htmlFor="zipcode" className="text-sm font-medium text-foreground">
                         Delivery Zipcode <span className="text-red-500">*</span>
                     </Label>
                     <Input
@@ -84,7 +84,7 @@ export default function Step2Details({ formData, onUpdate, onNext, onBack, error
                 </div>
 
                 <div className="space-y-3">
-                    <Label className="text-sm font-medium text-gray-300">
+                    <Label className="text-sm font-medium text-foreground">
                         I need expert help with <span className="text-red-500">*</span>
                     </Label>
                     <div className="grid grid-cols-1 gap-3">
@@ -99,15 +99,15 @@ export default function Step2Details({ formData, onUpdate, onNext, onBack, error
                                     type="button"
                                     onClick={() => onUpdate('helpType', option.id)}
                                     className={`relative p-4 rounded-xl border-2 transition-all duration-200 text-left group
-                                        ${isSelected ? 'border-indigo-500 bg-indigo-600/10 shadow-md shadow-indigo-900/30' : hasError ? 'border-red-500/50 bg-red-950/10 hover:border-red-500/70' : 'border-white/10 bg-white/5 hover:border-indigo-500/20 hover:bg-white/10'}`}
+                                        ${isSelected ? 'border-indigo-500 bg-indigo-500/20 shadow-md shadow-indigo-500/20' : hasError ? 'border-red-500/50 bg-red-500/10 hover:border-red-500/70' : 'border-border bg-muted/30 hover:border-indigo-500/20 hover:bg-muted'}`}
                                 >
                                     <div className="flex items-center gap-4">
-                                        <div className={`p-3 rounded-lg transition-colors shadow-sm ${isSelected ? 'bg-indigo-600 text-white' : 'bg-white/10 text-gray-400 group-hover:bg-white/20'}`}>
+                                        <div className={`p-3 rounded-lg transition-colors shadow-sm ${isSelected ? 'bg-indigo-600 text-white' : 'bg-muted text-muted-foreground group-hover:bg-muted/80'}`}>
                                             <Icon className="w-5 h-5" />
                                         </div>
                                         <div className="flex-1">
-                                            <div className={`font-semibold text-base mb-0.5 ${isSelected ? 'text-white' : 'text-gray-200'}`}>{option.label}</div>
-                                            <div className={`text-xs ${isSelected ? 'text-indigo-300' : 'text-gray-500'}`}>{option.desc}</div>
+                                            <div className={`font-semibold text-base mb-0.5 ${isSelected ? 'text-indigo-900 dark:text-white' : 'text-foreground'}`}>{option.label}</div>
+                                            <div className={`text-xs ${isSelected ? 'text-indigo-700 dark:text-indigo-100' : 'text-muted-foreground'}`}>{option.desc}</div>
                                         </div>
                                         {isSelected && (
                                             <div className="shrink-0">
@@ -126,7 +126,7 @@ export default function Step2Details({ formData, onUpdate, onNext, onBack, error
             </div>
 
             <div className="flex gap-3 pt-4">
-                <Button variant="outline" onClick={onBack} size="lg" className="px-6 border-white/20 bg-white/5 hover:bg-white/10 text-gray-300">
+                <Button variant="outline" onClick={onBack} size="lg" className="px-6 border-border bg-muted hover:bg-muted/80 text-foreground">
                     <ArrowLeft className="mr-2 w-5 h-5" />
                     Back
                 </Button>

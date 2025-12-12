@@ -48,9 +48,9 @@ export default function CreateFormDialog({ children }: CreateFormDialogProps) {
     return (
         <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>{children}</DialogTrigger>
-            <DialogContent className="max-w-sm bg-[#0A0A0A] border-white/10 text-white shadow-2xl">
+            <DialogContent className="max-w-sm bg-card border-border text-foreground shadow-2xl">
                 <DialogHeader>
-                    <DialogTitle className="text-xl font-semibold text-white">Create New Form</DialogTitle>
+                    <DialogTitle className="text-xl font-semibold text-foreground">Create New Form</DialogTitle>
                 </DialogHeader>
                 <div className="space-y-4 mt-2">
                     <Input
@@ -58,7 +58,7 @@ export default function CreateFormDialog({ children }: CreateFormDialogProps) {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         disabled={loading}
-                        className="bg-white/5 border-white/10 text-white placeholder:text-gray-600 focus-visible:ring-indigo-500 focus-visible:ring-offset-0 transition-colors"
+                        className="bg-background border-border text-foreground placeholder:text-muted-foreground focus-visible:ring-indigo-500 focus-visible:ring-offset-0 transition-colors"
                     />
                     <Button onClick={handleCreate} className="w-full bg-indigo-600 hover:bg-indigo-500 text-white" disabled={loading}>
                         {loading ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : 'Create'}

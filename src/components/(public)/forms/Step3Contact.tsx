@@ -44,64 +44,64 @@ export default function Step3Contact({ formData, onUpdate, onSubmit, onBack, loa
         <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="text-center">
                 <div className="inline-flex items-center justify-center p-3 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-3">
-                    <Mail className="w-6 h-6 text-indigo-400" />
+                    <Mail className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
                 </div>
-                <h2 className="text-2xl font-bold text-white mb-2">Step 3: Confirm & Submit</h2>
-                <p className="text-gray-400 max-w-sm mx-auto">Choose your preferred contact method and submit your request for analysis.</p>
+                <h2 className="text-2xl font-bold text-foreground mb-2">Step 3: Confirm & Submit</h2>
+                <p className="text-muted-foreground max-w-sm mx-auto">Choose your preferred contact method and submit your request for analysis.</p>
             </div>
 
             <ContactMethod value={formData.contactMethod} onChange={(v) => onUpdate('contactMethod', v)} email={formData.email} phone={formData.phone} onEmailChange={(v) => onUpdate('email', v)} onPhoneChange={(v) => onUpdate('phone', v)} errors={errors} />
 
-            <div className="bg-white/5 border border-white/10 rounded-xl p-6">
-                <div className="flex items-center gap-3 mb-4 border-b border-white/10 pb-3">
-                    <div className="p-2 bg-green-600/20 rounded-lg">
-                        <Check className="w-4 h-4 text-green-400" />
+            <div className="bg-muted/30 border border-border rounded-xl p-6">
+                <div className="flex items-center gap-3 mb-4 border-b border-border pb-3">
+                    <div className="p-2 bg-green-500/20 rounded-lg">
+                        <Check className="w-4 h-4 text-green-600 dark:text-green-400" />
                     </div>
-                    <h3 className="text-base font-bold text-white">Review Summary</h3>
+                    <h3 className="text-base font-bold text-foreground">Review Summary</h3>
                 </div>
 
                 <div className="space-y-2.5">
-                    <div className="flex justify-between items-center py-2 border-b border-white/10">
-                        <span className="text-sm font-medium text-gray-400 flex items-center gap-2">
-                            <User className="w-4 h-4 text-gray-500" /> Full Name
+                    <div className="flex justify-between items-center py-2 border-b border-border">
+                        <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                            <User className="w-4 h-4 text-muted-foreground" /> Full Name
                         </span>
-                        <span className="text-sm text-white font-semibold capitalize">
+                        <span className="text-sm text-foreground font-semibold capitalize">
                             {formData.firstName} {formData.lastName}
                         </span>
                     </div>
 
-                    <div className="flex justify-between items-center py-2 border-b border-white/10">
-                        <span className="text-sm font-medium text-gray-400 flex items-center gap-2">
-                            <Info className="w-4 h-4 text-gray-500" /> Zipcode
+                    <div className="flex justify-between items-center py-2 border-b border-border">
+                        <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                            <Info className="w-4 h-4 text-muted-foreground" /> Zipcode
                         </span>
-                        <span className="text-sm text-white font-semibold">{formData.zipcode}</span>
+                        <span className="text-sm text-foreground font-semibold">{formData.zipcode}</span>
                     </div>
 
-                    <div className="flex justify-between items-center py-2 border-b border-white/10">
-                        <span className="text-sm font-medium text-gray-400 flex items-center gap-2">
-                            <Calendar className="w-4 h-4 text-gray-500" /> Service Type
+                    <div className="flex justify-between items-center py-2 border-b border-border">
+                        <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                            <Calendar className="w-4 h-4 text-muted-foreground" /> Service Type
                         </span>
-                        <span className="text-sm text-white font-semibold">{serviceLabel}</span>
+                        <span className="text-sm text-foreground font-semibold">{serviceLabel}</span>
                     </div>
 
-                    <div className="flex justify-between items-center py-2 border-b border-white/10">
-                        <span className="text-sm font-medium text-gray-400 flex items-center gap-2">
-                            <Video className="w-4 h-4 text-gray-500" /> Video Uploaded
+                    <div className="flex justify-between items-center py-2 border-b border-border">
+                        <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                            <Video className="w-4 h-4 text-muted-foreground" /> Video Uploaded
                         </span>
-                        <span className="text-sm text-green-400 font-semibold truncate max-w-[180px]">Uploaded</span>
+                        <span className="text-sm text-green-600 dark:text-green-400 font-semibold truncate max-w-[180px]">Uploaded</span>
                     </div>
 
                     <div className="flex justify-between items-center pt-2">
-                        <span className="text-sm font-medium text-gray-400 flex items-center gap-2">
-                            <ContactIcon className="w-4 h-4 text-gray-500" /> Contact Preference
+                        <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                            <ContactIcon className="w-4 h-4 text-muted-foreground" /> Contact Preference
                         </span>
-                        <span className="text-sm text-indigo-400 font-semibold">{contactValue}</span>
+                        <span className="text-sm text-indigo-500 dark:text-indigo-400 font-semibold">{contactValue}</span>
                     </div>
                 </div>
             </div>
 
             <div className="flex gap-3 pt-4">
-                <Button variant="outline" onClick={onBack} size="lg" disabled={loading} className="px-6 border-white/20 bg-white/5 hover:bg-white/10 text-gray-300">
+                <Button variant="outline" onClick={onBack} size="lg" disabled={loading} className="px-6 border-border bg-muted hover:bg-muted/80 text-foreground">
                     <ArrowLeft className="mr-2 w-5 h-5" />
                     Back
                 </Button>

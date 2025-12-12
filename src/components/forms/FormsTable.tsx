@@ -117,9 +117,11 @@ export default function FormsTable() {
                                             <Hash className="w-4 h-4 text-indigo-400 shrink-0" />
                                             {form.name}
                                         </td>
-                                        <td className="p-4 font-medium text-indigo-300 hidden sm:table-cell items-center gap-1">
-                                            <Send className="w-3 h-3 text-indigo-500" />
-                                            {form.submissions}
+                                        <td className="p-4 font-medium text-indigo-300 hidden sm:table-cell">
+                                            <div className="flex items-center gap-1">
+                                                <Send className="w-3 h-3 text-indigo-500" />
+                                                {form.submissions}
+                                            </div>
                                         </td>
                                         <td className="p-4">
                                             <span className={`px-3 py-1 rounded-full text-xs font-medium flex items-center w-fit ${getStatusStyles(form.status)}`}>

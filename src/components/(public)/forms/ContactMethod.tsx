@@ -32,7 +32,7 @@ export default function ContactMethod({ value, onChange, email, phone, onEmailCh
     const isPhoneError = value === 'phone' && !!errors.phone;
 
     const inputClasses = (isError: boolean) =>
-        `h-11 text-base bg-white/5 border text-white placeholder:text-gray-600 focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-0 transition-colors ${isError ? 'border-red-500 ring-red-500' : 'border-white/10 focus:border-indigo-500/50'}`;
+        `h-11 text-base bg-background border text-foreground placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-0 transition-colors ${isError ? 'border-red-500 ring-red-500' : 'border-border focus:border-indigo-500/50'}`;
 
     return (
         <div className="space-y-4">
@@ -47,15 +47,15 @@ export default function ContactMethod({ value, onChange, email, phone, onEmailCh
                             type="button"
                             onClick={() => onChange(option.id)}
                             className={`relative p-4 rounded-xl border-2 transition-all duration-200 text-left group
-                                ${isSelected ? 'border-indigo-500 bg-indigo-600/10 shadow-md shadow-indigo-900/30' : hasMethodError ? 'border-red-500/50 bg-red-950/10 hover:border-red-500/70' : 'border-white/10 bg-white/5 hover:border-indigo-500/20 hover:bg-white/10'}`}
+                                ${isSelected ? 'border-indigo-500 bg-indigo-600/10 shadow-md shadow-indigo-900/30' : hasMethodError ? 'border-red-500/50 bg-red-500/10 hover:border-red-500/70' : 'border-border bg-muted/30 hover:border-indigo-500/20 hover:bg-muted'}`}
                         >
                             <div className="flex items-center gap-4">
-                                <div className={`p-3 rounded-lg transition-colors shadow-sm ${isSelected ? 'bg-indigo-600 text-white' : 'bg-white/10 text-gray-400 group-hover:bg-white/20'}`}>
+                                <div className={`p-3 rounded-lg transition-colors shadow-sm ${isSelected ? 'bg-indigo-600 text-white' : 'bg-muted text-muted-foreground group-hover:bg-muted/80'}`}>
                                     <Icon className="w-5 h-5" />
                                 </div>
                                 <div className="flex-1">
-                                    <div className={`font-semibold text-base mb-0.5 ${isSelected ? 'text-white' : 'text-gray-200'}`}>{option.label}</div>
-                                    <div className={`text-xs ${isSelected ? 'text-indigo-300' : 'text-gray-500'}`}>{option.desc}</div>
+                                    <div className={`font-semibold text-base mb-0.5 ${isSelected ? 'text-white' : 'text-foreground'}`}>{option.label}</div>
+                                    <div className={`text-xs ${isSelected ? 'text-indigo-300' : 'text-muted-foreground'}`}>{option.desc}</div>
                                 </div>
                                 {isSelected && (
                                     <div className="shrink-0">
@@ -73,7 +73,7 @@ export default function ContactMethod({ value, onChange, email, phone, onEmailCh
 
             {value === 'email' && (
                 <div className="space-y-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                    <Label htmlFor="email" className="text-sm font-medium text-gray-300">
+                    <Label htmlFor="email" className="text-sm font-medium text-foreground">
                         Email Address <span className="text-red-500">*</span>
                     </Label>
                     <Input id="email" type="email" value={email} onChange={(e) => onEmailChange(e.target.value)} placeholder="you@example.com" className={inputClasses(isEmailError)} />

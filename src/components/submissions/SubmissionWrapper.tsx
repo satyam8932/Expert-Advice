@@ -27,7 +27,7 @@ export default function SubmissionWrapper({ initialSubmissions }: SubmissionWrap
                 <div>
                     <h1 className="text-3xl font-bold bg-clip-text text-transparent bg-linear-to-r from-foreground to-muted-foreground">Submissions</h1>
                     <p className="text-muted-foreground mt-1 flex items-center gap-2">
-                        <Send className="w-4 h-4 text-gray-600" />
+                        <Send className="w-4 h-4 text-muted-foreground" />
                         Manage and analyze your incoming video forms
                     </p>
                 </div>
@@ -35,12 +35,12 @@ export default function SubmissionWrapper({ initialSubmissions }: SubmissionWrap
                 {/* Search and Action Buttons (Stacks below title on mobile, inline on MD+) */}
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 w-full sm:w-auto">
                     <div className="relative w-full sm:w-73">
-                        <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-500" />
+                        <Search className="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground" />
                         <Input
                             placeholder="Search customer, email, or status..."
                             value={search}
                             onChange={(e) => setSearch(e.target.value)}
-                            className="h-10 bg-muted border border-border rounded-lg pl-10 pr-4 text-sm focus:outline-none focus:border-indigo-500/50 transition-colors placeholder:text-muted-foreground text-foreground w-full"
+                            className="h-10 border border-border rounded-lg pl-10 pr-4 text-sm focus:outline-none focus:border-indigo-500/50 transition-colors placeholder:text-muted-foreground text-foreground w-full"
                         />
                     </div>
 
