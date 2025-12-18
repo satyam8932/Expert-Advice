@@ -25,7 +25,7 @@ export default function UserDropdown({ user, onLogout }: UserDropdownProps) {
     const initials = getInitials(user.name);
 
     return (
-        <DropdownMenu>
+        <DropdownMenu modal={false}>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="flex items-center gap-2 px-2 py-1.5 h-auto rounded-full text-muted-foreground hover:bg-muted hover:text-foreground transition-colors">
                     <Avatar className="h-8 w-8">

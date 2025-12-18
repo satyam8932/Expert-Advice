@@ -5,8 +5,10 @@ import { Button } from '@/components/ui/button';
 import { CreditCard, Download, CheckCircle, AlertTriangle, Clock } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
+import { useState } from 'react';
+import { toast } from 'sonner';
 
-export type PlanType = 'free' | 'pro' | 'enterprise';
+export type PlanType = 'go' | 'pro';
 export type SubscriptionStatus = 'active' | 'cancelled' | 'past_due';
 
 export interface SubscriptionDetails {
@@ -21,22 +23,44 @@ export interface Invoice {
     id: string;
     date: string;
     amount: string;
-    status: 'paid' | 'pending' | 'failed';
-    downloadUrl: string;
+    status: 'paid' | 'open' | 'void' | 'uncollectible';
+    pdfUrl: string | null;
 }
 
 const getPlanGradient = (plan: PlanType) => {
     switch (plan) {
         case 'pro':
             return 'bg-gradient-to-br from-indigo-600 to-purple-600';
-        case 'enterprise':
-            return 'bg-gradient-to-br from-slate-800 to-black border border-white/10';
         default:
             return 'bg-gradient-to-br from-gray-800 to-gray-900 border border-white/10';
     }
 };
 
 export function PlanDetailsCard({ subscription }: { subscription: SubscriptionDetails }) {
+    const [loading, setLoading] = useState(false);
+
+    const handleManageSubscription = async () => {
+        setLoading(true);
+        try {
+            const res = await fetch('/api/billing/portal', {
+                method: 'POST',
+            });
+
+            const data = await res.json();
+
+            if (data.error) {
+                toast.error(data.error);
+                return;
+            }
+
+            window.location.href = data.url;
+        } catch (error) {
+            toast.error('Failed to open billing portal');
+        } finally {
+            setLoading(false);
+        }
+    };
+
     return (
         <Card className="bg-card border border-border shadow-xl flex flex-col h-full">
             <CardHeader className="border-b border-white/5 pb-4">
@@ -65,17 +89,13 @@ export function PlanDetailsCard({ subscription }: { subscription: SubscriptionDe
                             <span className="text-gray-400 flex items-center gap-2">
                                 <Clock className="w-4 h-4" /> Next billing date
                             </span>
-                            <span className="font-medium text-foreground">{subscription.nextBillingDate || 'N/A'}</span>
-                        </div>
-                        <div className="flex items-center justify-between text-sm py-3 border-b border-white/5">
-                            <span className="text-gray-400 flex items-center gap-2">
-                                <CreditCard className="w-4 h-4" /> Payment method
-                            </span>
-                            <span className="font-medium text-foreground">{subscription.paymentMethod || '•••• •••• •••• ••••'}</span>
+                            <span className="text-foreground font-medium">{subscription.nextBillingDate || 'N/A'}</span>
                         </div>
                     </div>
 
-                    <Button className="w-full bg-white text-black hover:bg-gray-200 font-semibold h-11 rounded-lg transition-all">Manage Subscription</Button>
+                    <Button onClick={handleManageSubscription} disabled={loading} className="w-full bg-white text-black hover:bg-gray-200 font-semibold h-11 rounded-lg transition-all">
+                        {loading ? 'Loading...' : 'Manage Subscription'}
+                    </Button>
                 </div>
             </CardContent>
         </Card>
@@ -102,8 +122,8 @@ export function InvoiceHistoryCard({ invoices }: { invoices: Invoice[] }) {
                                         <p className="text-xs text-gray-500">{invoice.date}</p>
                                     </div>
                                 </div>
-                                <Button asChild variant="ghost" size="icon" className="text-gray-500 hover:text-indigo-400 hover:bg-indigo-500/10">
-                                    <Link href={invoice.downloadUrl} target="_blank">
+                                <Button asChild variant="ghost" size="icon" className="text-gray-500 hover:text-indigo-400 hover:bg-indigo-500/10" disabled={!invoice.pdfUrl}>
+                                    <Link href={invoice.pdfUrl || '#'} target="_blank">
                                         <Download className="w-4 h-4" />
                                     </Link>
                                 </Button>

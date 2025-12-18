@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { toast } from 'sonner';
 import { useFormsStore } from '@/store/forms.store';
-import { FormType } from '@/lib/types/forms.types';
 import { Loader2 } from 'lucide-react';
 
 interface CreateFormDialogProps {
@@ -18,9 +18,14 @@ export default function CreateFormDialog({ children }: CreateFormDialogProps) {
     const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
     const addForm = useFormsStore((s) => s.addForm);
+    const router = useRouter();
 
     const handleCreate = async () => {
-        if (!name.trim()) return toast.error('Form name required.');
+        if (!name.trim()) {
+            toast.error('Form name is required');
+            return;
+        }
+
         setLoading(true);
         try {
             const res = await fetch('/api/forms', {
@@ -29,17 +34,31 @@ export default function CreateFormDialog({ children }: CreateFormDialogProps) {
                 body: JSON.stringify({ name }),
             });
 
-            const json: { form?: FormType; error?: string } = await res.json();
+            const data = await res.json();
 
-            if (!res.ok || !json.form) throw new Error(json.error || 'Failed to create form.');
+            if (!res.ok) {
+                if (data.requiresUpgrade) {
+                    const message = data.limit ? `${data.error} (${data.currentUsage}/${data.limit} used)` : data.error;
 
-            addForm(json.form);
-            toast.success('Form created successfully!');
-            setOpen(false);
+                    toast.error(message, {
+                        action: {
+                            label: 'Upgrade',
+                            onClick: () => router.push('/dashboard/billings'),
+                        },
+                    });
+                } else {
+                    toast.error(data.error || 'Failed to create form');
+                }
+                return;
+            }
+
+            addForm(data.form);
+            toast.success('Form created successfully');
             setName('');
+            setOpen(false);
+            router.refresh();
         } catch (error) {
-            console.error('API Error:', error);
-            toast.error(error instanceof Error ? error.message : 'Error creating form.');
+            toast.error('An error occurred');
         } finally {
             setLoading(false);
         }

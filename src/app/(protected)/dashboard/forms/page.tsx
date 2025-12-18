@@ -7,13 +7,11 @@ export const metadata = {
 
 export default async function FormsPage() {
     const supabase = await supabaseServer();
-    const { data: { user } } = await supabase.auth.getUser();
+    const {
+        data: { user },
+    } = await supabase.auth.getUser();
 
-    const { data: forms } = await supabase
-        .from('forms')
-        .select('*')
-        .eq('user_id', user!.id)
-        .order('created_at', { ascending: false });
+    const { data: forms } = await supabase.from('forms').select('*').eq('user_id', user!.id).order('created_at', { ascending: false });
 
     return <FormWrapper initialForms={forms || []} />;
 }

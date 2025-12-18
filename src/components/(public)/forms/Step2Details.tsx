@@ -18,7 +18,7 @@ interface Step2DetailsProps {
 
 const helpOptions: HelpOption[] = [
     { id: 'labour', label: 'Moving Labour', icon: Users, desc: 'Professional movers and assistance' },
-    { id: 'storage', label: 'Storage Container', icon: Package, desc: 'Portable moving container rental' },
+    { id: 'storage', label: 'Moving and Storage Container', icon: Package, desc: 'Portable moving container rental' },
     { id: 'both', label: 'Both Services', icon: Package, desc: 'Complete moving solution package' },
 ];
 
@@ -42,8 +42,8 @@ export default function Step2Details({ formData, onUpdate, onNext, onBack, error
                 <div className="inline-flex items-center justify-center p-3 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-3">
                     <Info className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
                 </div>
-                <h2 className="text-2xl font-bold text-foreground mb-2">Step 2: Basic Details</h2>
-                <p className="text-muted-foreground max-w-sm mx-auto">Tell us who you are and what you need assistance with.</p>
+                <h2 className="text-2xl font-bold text-foreground mb-2">How can we help</h2>
+                <p className="text-muted-foreground max-w-sm mx-auto">Tell us what you need assistance with.</p>
             </div>
 
             <div className="space-y-6">
@@ -85,7 +85,7 @@ export default function Step2Details({ formData, onUpdate, onNext, onBack, error
 
                 <div className="space-y-3">
                     <Label className="text-sm font-medium text-foreground">
-                        I need expert help with <span className="text-red-500">*</span>
+                        Select an option below <span className="text-red-500">*</span>
                     </Label>
                     <div className="grid grid-cols-1 gap-3">
                         {helpOptions.map((option) => {

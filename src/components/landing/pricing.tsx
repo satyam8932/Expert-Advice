@@ -19,15 +19,15 @@ const plans: Plan[] = [
         name: 'Go Plan',
         price: { monthly: 27 },
         description: 'Essential tools for individuals and small teams to explore features.',
-        features: ['5 active forms', '20 form submissions', '2 hours of audio transcription', '10 GB storage', 'Standard support'],
+        features: ['5 active forms', '20 form submissions', '120 minutes of audio transcription', '10 GB storage', 'Standard support'],
         notIncluded: ['Video Intelligence'],
     },
     {
         name: 'Pro Plan',
         price: { monthly: 69 },
-        description: 'Unlock unlimited potential and advanced intelligence.',
+        description: 'Unlock higher potential and advanced intelligence.',
         popular: true,
-        features: ['Unlimited active forms', 'Unlimited submissions', '10 hours of audio transcription', '5 hours of video intelligence', '50 GB storage', 'Priority support'],
+        features: ['20 active forms', '100 form submissions', '600 minutes of audio transcription', '300 minutes of video intelligence', '50 GB storage', 'Priority support'],
     },
 ];
 

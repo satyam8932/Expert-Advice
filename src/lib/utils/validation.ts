@@ -79,24 +79,22 @@ export const validateStep2 = (formData: CollectionFormData): ValidationErrors =>
 export const validateStep3 = (formData: CollectionFormData): ValidationErrors => {
     const errors: ValidationErrors = {};
 
-    if (!formData.contactMethod) {
-        errors.contactMethod = 'Please select a contact method';
+    const hasEmail = formData.email.trim().length > 0;
+    const hasPhone = formData.phone.trim().length > 0;
+
+    // Require at least one contact method
+    if (!hasEmail && !hasPhone) {
+        errors.contactMethod = 'Please provide at least one contact method (email or phone)';
     }
 
-    if (formData.contactMethod === 'email') {
-        if (!formData.email.trim()) {
-            errors.email = 'Email is required';
-        } else if (!validateEmail(formData.email)) {
-            errors.email = 'Please enter a valid email address';
-        }
+    // Validate email format if provided
+    if (hasEmail && !validateEmail(formData.email)) {
+        errors.email = 'Please enter a valid email address';
     }
 
-    if (formData.contactMethod === 'phone') {
-        if (!formData.phone.trim()) {
-            errors.phone = 'Phone number is required';
-        } else if (!validatePhone(formData.phone)) {
-            errors.phone = 'Please enter a valid phone number (min 10 digits)';
-        }
+    // Validate phone format if provided
+    if (hasPhone && !validatePhone(formData.phone)) {
+        errors.phone = 'Please enter a valid phone number (min 10 digits)';
     }
 
     return errors;

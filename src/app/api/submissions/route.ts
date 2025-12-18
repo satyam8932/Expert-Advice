@@ -1,5 +1,7 @@
 import { supabaseServer } from '@/supabase/server';
 import { NextResponse } from 'next/server';
+import { checkQuota } from '@/lib/quota/checker';
+import { incrementSubmissions } from '@/lib/usage/tracker';
 
 export async function POST(req: Request) {
     try {
@@ -23,6 +25,20 @@ export async function POST(req: Request) {
         }
 
         const userId = form.user_id;
+
+        const quotaCheck = await checkQuota(userId, 'submissions');
+
+        if (!quotaCheck.allowed) {
+            return NextResponse.json(
+                {
+                    error: quotaCheck.message,
+                    requiresUpgrade: quotaCheck.requiresUpgrade,
+                    currentUsage: quotaCheck.current,
+                    limit: quotaCheck.limit,
+                },
+                { status: 403 }
+            );
+        }
 
         const submissionData = {
             first_name: firstName,
@@ -54,7 +70,6 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Failed to save submission: ' + submissionError.message }, { status: 500 });
         }
 
-        // Trigger n8n webhook to start processing
         try {
             await fetch(process.env.N8N_TRANSCRIBE_URL as string, {
                 method: 'POST',
@@ -72,7 +87,8 @@ export async function POST(req: Request) {
         } catch (err) {
             console.error('Failed to trigger transcription workflow:', err);
         }
-
+        
+        await incrementSubmissions(userId);
         const { error: updateError } = await supabase.rpc('increment_form_submissions', { form_id: formId });
 
         if (updateError) {
@@ -96,9 +112,7 @@ export async function DELETE(req: Request) {
         try {
             const body = await req.json().catch(() => ({}));
             if (Array.isArray(body?.ids)) ids = body.ids;
-        } catch {
-            // ignore
-        }
+        } catch { }
 
         if (!id && (!ids || !ids.length)) {
             return NextResponse.json({ error: 'No submission ID(s) provided' }, { status: 400 });
@@ -110,15 +124,76 @@ export async function DELETE(req: Request) {
 
         const deleteIds = ids?.length ? ids : [id!];
 
-        // CRITICAL: Verify ownership before deletion - prevents IDOR vulnerability
-        const { error } = await supabase
+        const { data: submissions } = await supabase
             .from('submissions')
-            .delete()
+            .select('video_url, json_result_url, markdown_url')
             .in('id', deleteIds)
             .eq('user_id', userId);
 
+        if (!submissions || submissions.length === 0) {
+            return NextResponse.json({ error: 'No submissions found' }, { status: 404 });
+        }
+
+        const bucketName = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET;
+        if (!bucketName) {
+            return NextResponse.json({ error: 'Storage not configured' }, { status: 500 });
+        }
+
+        let totalBytes = 0;
+        const filesToDelete: string[] = [];
+
+        for (const sub of submissions) {
+            const urls = [sub.video_url, sub.json_result_url, sub.markdown_url].filter(Boolean);
+
+            for (const fileUrl of urls) {
+                try {
+                    const urlParts = fileUrl!.split(`/object/public/${bucketName}/`);
+                    if (urlParts.length === 2) {
+                        const filePath = urlParts[1];
+                        const pathParts = filePath.split('/');
+                        const fileName = pathParts[pathParts.length - 1];
+                        const folderPath = pathParts.slice(0, -1).join('/');
+
+                        const { data: files } = await supabase.storage.from(bucketName).list(folderPath, {
+                            search: fileName,
+                        });
+
+                        if (files && files.length > 0) {
+                            const file = files.find((f) => f.name === fileName);
+                            if (file) {
+                                const fileSize = (file as any).size || file.metadata?.size || 0;
+                                totalBytes += fileSize;
+                                filesToDelete.push(filePath);
+                                console.log('[Storage Delete] Found file:', fileName, '-', fileSize, 'bytes');
+                            }
+                        }
+                    }
+                } catch (err: any) {
+                    console.error('[Storage Delete] Error listing file:', err.message);
+                }
+            }
+        }
+
+        if (filesToDelete.length > 0) {
+            const { error: storageError } = await supabase.storage.from(bucketName).remove(filesToDelete);
+            if (storageError) {
+                console.error('[Storage Delete] Failed to delete files:', storageError);
+            } else {
+                console.log('[Storage Delete] ✓ Deleted', filesToDelete.length, 'files from storage');
+            }
+        }
+
+        const { error } = await supabase.from('submissions').delete().in('id', deleteIds).eq('user_id', userId);
+
         if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-        return NextResponse.json({ success: true, deleted: deleteIds });
+
+        if (totalBytes > 0) {
+            const { decrementStorage } = await import('@/lib/usage/tracker');
+            await decrementStorage(userId, totalBytes);
+            console.log('[Storage Delete] ✓ Decremented', totalBytes, 'bytes for user:', userId);
+        }
+
+        return NextResponse.json({ success: true, deleted: deleteIds, filesDeleted: filesToDelete.length });
     } catch (error: any) {
         console.error('Delete submissions error:', error);
         return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

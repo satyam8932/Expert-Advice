@@ -35,22 +35,24 @@ export default function Step3Contact({ formData, onUpdate, onSubmit, onBack, loa
 
     const serviceLabel = helpOptions.find((h) => h.id === formData.helpType)?.label || 'N/A';
 
-    // FIX: Only use formData.phone for display if contact method is phone,
-    // as it already contains the country code from PhoneInputField.
-    const contactValue = formData.contactMethod === 'email' ? formData.email : formData.contactMethod === 'phone' ? formData.phone || 'Not provided' : 'Not selected';
-    const ContactIcon = formData.contactMethod === 'email' ? Mail : Phone;
-
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
             <div className="text-center">
                 <div className="inline-flex items-center justify-center p-3 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-3">
                     <Mail className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
                 </div>
-                <h2 className="text-2xl font-bold text-foreground mb-2">Step 3: Confirm & Submit</h2>
-                <p className="text-muted-foreground max-w-sm mx-auto">Choose your preferred contact method and submit your request for analysis.</p>
+                <h2 className="text-2xl font-bold text-foreground mb-2">Get Free Local Expert Advice</h2>
+                <p className="text-muted-foreground max-w-sm mx-auto">How can we reach you?</p>
+                <p className="text-muted-foreground max-w-sm mx-auto">Zero spam, We are actual people and here to help!</p>
             </div>
 
-            <ContactMethod value={formData.contactMethod} onChange={(v) => onUpdate('contactMethod', v)} email={formData.email} phone={formData.phone} onEmailChange={(v) => onUpdate('email', v)} onPhoneChange={(v) => onUpdate('phone', v)} errors={errors} />
+            <ContactMethod
+                email={formData.email}
+                phone={formData.phone}
+                onEmailChange={(v) => onUpdate('email', v)}
+                onPhoneChange={(v) => onUpdate('phone', v)}
+                errors={errors}
+            />
 
             <div className="bg-muted/30 border border-border rounded-xl p-6">
                 <div className="flex items-center gap-3 mb-4 border-b border-border pb-3">
@@ -91,12 +93,25 @@ export default function Step3Contact({ formData, onUpdate, onSubmit, onBack, loa
                         <span className="text-sm text-green-600 dark:text-green-400 font-semibold truncate max-w-[180px]">Uploaded</span>
                     </div>
 
-                    <div className="flex justify-between items-center pt-2">
-                        <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                            <ContactIcon className="w-4 h-4 text-muted-foreground" /> Contact Preference
-                        </span>
-                        <span className="text-sm text-indigo-500 dark:text-indigo-400 font-semibold">{contactValue}</span>
-                    </div>
+                    {/* Show email if provided */}
+                    {formData.email && (
+                        <div className="flex justify-between items-center py-2 border-b border-border">
+                            <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                                <Mail className="w-4 h-4 text-muted-foreground" /> Email
+                            </span>
+                            <span className="text-sm text-indigo-500 dark:text-indigo-400 font-semibold truncate max-w-[180px]">{formData.email}</span>
+                        </div>
+                    )}
+
+                    {/* Show phone if provided */}
+                    {formData.phone && (
+                        <div className="flex justify-between items-center pt-2">
+                            <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
+                                <Phone className="w-4 h-4 text-muted-foreground" /> Phone
+                            </span>
+                            <span className="text-sm text-indigo-500 dark:text-indigo-400 font-semibold">{formData.phone}</span>
+                        </div>
+                    )}
                 </div>
             </div>
 

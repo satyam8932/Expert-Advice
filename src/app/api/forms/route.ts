@@ -1,5 +1,9 @@
 import { supabaseServer } from '@/supabase/server';
 import { NextResponse } from 'next/server';
+import { db } from '@/lib/db/drizzle';
+import { usage } from '../../../../drizzle/schema';
+import { eq } from 'drizzle-orm';
+import { checkQuota } from '@/lib/quota/checker';
 
 export async function POST(req: Request) {
     const { name } = await req.json();
@@ -10,6 +14,20 @@ export async function POST(req: Request) {
     const userId = user?.user?.id;
     if (!userId) return NextResponse.json({ error: 'Unauthenticated' }, { status: 401 });
 
+    const quotaCheck = await checkQuota(userId, 'forms');
+
+    if (!quotaCheck.allowed) {
+        return NextResponse.json(
+            {
+                error: quotaCheck.message,
+                requiresUpgrade: quotaCheck.requiresUpgrade,
+                currentUsage: quotaCheck.current,
+                limit: quotaCheck.limit,
+            },
+            { status: 403 }
+        );
+    }
+
     const { data, error } = await supabase
         .from('forms')
         .insert([{ user_id: userId, name }])
@@ -17,6 +35,15 @@ export async function POST(req: Request) {
         .single();
 
     if (error) return NextResponse.json({ error: error.message }, { status: 500 });
+
+    await db
+        .update(usage)
+        .set({
+            formsCreatedCount: quotaCheck.current + 1,
+            updatedAt: new Date(),
+        })
+        .where(eq(usage.userId, userId));
+
     return NextResponse.json({ form: data });
 }
 

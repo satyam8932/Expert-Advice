@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { supabaseServer } from '@/supabase/server';
 import { eq } from 'drizzle-orm';
 import { users } from '../../../../drizzle/schema';
-import { db } from '@/db/drizzle';
+import { db } from '@/lib/db/drizzle';
 
 export async function GET(request: Request) {
     const requestUrl = new URL(request.url);

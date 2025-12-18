@@ -1,7 +1,6 @@
 'use client';
 import PhoneInput, { type Value } from 'react-phone-number-input';
 import 'react-phone-number-input/style.css';
-import { Label } from '@/components/ui/label';
 
 interface PhoneInputFieldProps {
     value: Value;
@@ -12,11 +11,8 @@ interface PhoneInputFieldProps {
 export default function PhoneInputField({ value, onChange, error }: PhoneInputFieldProps) {
     return (
         <div className="space-y-2">
-            <Label htmlFor="phone" className="text-sm font-medium text-foreground">
-                Phone Number <span className="text-red-500">*</span>
-            </Label>
             <div className="phone-input-themed">
-                <PhoneInput international defaultCountry="US" value={value} onChange={onChange} className={error ? 'phone-input-error' : ''} />
+                <PhoneInput international defaultCountry="US" value={value} onChange={onChange} />
             </div>
             {error && <p className="text-xs text-red-500 mt-1">{error}</p>}
             <style jsx global>{`
@@ -26,7 +22,7 @@ export default function PhoneInputField({ value, onChange, error }: PhoneInputFi
                     display: flex;
                     align-items: center;
                     background: hsl(var(--background));
-                    border: 1px solid ${error ? '#ef4444' : 'hsl(var(--border))'};
+                    border: 1px solid ${error ? '#ef4444' : 'hsl(var(--border))'} !important;
                     border-radius: 0.75rem;
                     padding: 0;
                     height: 2.75rem;
@@ -34,7 +30,7 @@ export default function PhoneInputField({ value, onChange, error }: PhoneInputFi
                 }
 
                 .phone-input-themed .PhoneInput:focus-within {
-                    border-color: ${error ? '#ef4444' : '#6366f1'};
+                    border-color: ${error ? '#ef4444' : '#6366f1'} !important;
                     outline: none;
                     box-shadow:
                         0 0 0 1px ${error ? '#ef4444' : '#6366f1'},

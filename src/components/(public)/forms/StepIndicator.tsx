@@ -10,8 +10,8 @@ interface StepIndicatorProps {
 export default function StepIndicator({ steps, currentStep }: StepIndicatorProps) {
     return (
         <div className="relative mb-20 md:mb-16">
-            <div className="flex items-center justify-center">
-                <div className="relative flex items-center justify-between w-full max-w-md">
+            <div className="flex items-center justify-center px-2">
+                <div className="relative flex items-center justify-between w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-xl">
                     {/* Progress Line */}
                     <div className="absolute top-1/2 left-0 right-0 h-0.5 bg-border -z-10 transform -translate-y-1/2 mt-1">
                         <div className="h-full bg-gradient-to-r from-indigo-500 to-purple-500 transition-all duration-500 ease-out rounded-full" style={{ width: `${((currentStep - 1) / (steps.length - 1)) * 100}%` }} />
@@ -34,9 +34,9 @@ export default function StepIndicator({ steps, currentStep }: StepIndicatorProps
                                 </div>
 
                                 {/* Step Title and Description */}
-                                <div className="mt-3 text-center whitespace-nowrap">
-                                    <div className={`font-medium text-sm transition-colors ${currentStep >= s.number ? 'text-foreground' : 'text-muted-foreground'}`}>{s.title}</div>
-                                    <div className={`text-xs transition-colors ${currentStep >= s.number ? 'text-indigo-500 dark:text-indigo-400' : 'text-muted-foreground'}`}>{s.desc}</div>
+                                <div className="mt-3 text-center max-w-[70px] sm:max-w-none">
+                                    <div className={`font-medium text-xs sm:text-sm transition-colors ${currentStep >= s.number ? 'text-foreground' : 'text-muted-foreground'}`}>{s.title}</div>
+                                    <div className={`text-[10px] sm:text-xs transition-colors ${currentStep >= s.number ? 'text-indigo-500 dark:text-indigo-400' : 'text-muted-foreground'}`}>{s.desc}</div>
                                 </div>
                             </div>
                         );

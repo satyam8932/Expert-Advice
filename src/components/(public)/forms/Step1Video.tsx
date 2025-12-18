@@ -33,8 +33,8 @@ export default function Step1Video({ formData, onUpdate, onNext, errors, setErro
                 <div className="inline-flex items-center justify-center p-3 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-3">
                     <Video className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
                 </div>
-                <h2 className="text-2xl font-bold text-foreground mb-2">Step 1: Upload Video Evidence</h2>
-                <p className="text-muted-foreground max-w-sm mx-auto">A quick video helps our AI analyze damage, dimensions, or details instantly.</p>
+                <h2 className="text-2xl font-bold text-foreground mb-2">Take a video and show us how we can help</h2>
+                <p className="text-muted-foreground max-w-sm mx-auto">While you are videoing tell us what's moving, what's staying, and what's storing.</p>
             </div>
 
             <div className="space-y-4">

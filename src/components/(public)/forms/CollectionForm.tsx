@@ -11,9 +11,9 @@ import { toast } from 'sonner';
 import { FormSubmitted } from './FormSubmitted';
 
 const steps: StepConfig[] = [
-    { number: 1, title: 'Video', desc: 'Upload video' },
-    { number: 2, title: 'Details', desc: 'Your info' },
-    { number: 3, title: 'Contact', desc: 'Get in touch' },
+    { number: 1, title: 'Video', desc: 'One click video upload' },
+    { number: 2, title: 'Details', desc: 'Tell us how we can help' },
+    { number: 3, title: 'Contact', desc: 'Get free expert advice' },
 ];
 
 interface CollectionFormProps {
@@ -57,10 +57,9 @@ export default function CollectionForm({ formId }: CollectionFormProps) {
                 lastName: formData.lastName,
                 zipcode: formData.zipcode,
                 helpType: formData.helpType,
-                contactMethod: formData.contactMethod,
-                email: formData.contactMethod === 'email' ? formData.email : undefined,
-                phone: formData.contactMethod === 'phone' ? formData.phone : undefined,
-                countryCode: formData.contactMethod === 'phone' ? formData.countryCode : undefined,
+                email: formData.email || undefined,
+                phone: formData.phone || undefined,
+                countryCode: formData.phone ? formData.countryCode : undefined,
                 videoUrl: formData.videoUrl,
             };
 
@@ -93,10 +92,10 @@ export default function CollectionForm({ formId }: CollectionFormProps) {
     }
 
     return (
-        <div className="w-full">
+        <div className="w-full overflow-x-hidden">
             <div className="mb-10 text-center">
-                <h1 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500 mb-3">Submit Your Intake Request</h1>
-                <p className="text-muted-foreground text-lg">Get AI-Powered Analysis</p>
+                <h1 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500 mb-3">Get Free Expert Advice... Easy as 1-2-3</h1>
+                <p className="text-muted-foreground text-lg">Analysis Powered by People and a little AI but mostly people</p>
             </div>
 
             <StepIndicator steps={steps} currentStep={step} />

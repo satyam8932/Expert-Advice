@@ -1,8 +1,8 @@
-import { pgTable, uuid, text, timestamp, pgEnum, jsonb, index, integer } from 'drizzle-orm/pg-core';
+import { pgTable, uuid, text, timestamp, pgEnum, jsonb, index, integer, bigint, numeric, boolean } from 'drizzle-orm/pg-core';
 
 /* ------------------- ENUMS ------------------- */
-export const subscriptionPlanEnum = pgEnum('subscription_plan', ['free', 'pro', 'enterprise']);
-export const subscriptionStatusEnum = pgEnum('subscription_status', ['active', 'cancelled', 'past_due']);
+export const subscriptionPlanEnum = pgEnum('subscription_plan', ['free', 'pro', 'go']);
+export const subscriptionStatusEnum = pgEnum('subscription_status', ['active', 'cancelled', 'past_due', 'trialing', 'unpaid']);
 export const formStatusEnum = pgEnum('form_status', ['active', 'completed']);
 export const submissionsStatusEnum = pgEnum('submissions_status', ['pending', 'completed', 'failed']);
 
@@ -23,14 +23,77 @@ export const subscriptions = pgTable(
         userId: uuid('user_id')
             .notNull()
             .references(() => users.id, { onDelete: 'cascade' }),
-        plan: subscriptionPlanEnum('plan').default('free').notNull(),
+
+        // Plan and status
+        plan: subscriptionPlanEnum('plan').default('go').notNull(),
+        planKey: text('plan_key').default('go').notNull(),
         status: subscriptionStatusEnum('status').default('active').notNull(),
+
+        // Stripe integration
+        stripeCustomerId: text('stripe_customer_id').unique(),
+        stripeSubscriptionId: text('stripe_subscription_id').unique(),
+
+        // Billing metadata
         subscriptionStart: timestamp('subscription_start').defaultNow(),
         subscriptionEnd: timestamp('subscription_end'),
+        lastBilledAt: timestamp('last_billed_at'),
         invoiceLink: text('invoice_link'),
+
         createdAt: timestamp('created_at').defaultNow(),
+        updatedAt: timestamp('updated_at').defaultNow().notNull(),
     },
-    (table) => [index('subscriptions_user_idx').on(table.userId)]
+    (table) => [index('subscriptions_user_idx').on(table.userId), index('subscriptions_stripe_customer_idx').on(table.stripeCustomerId), index('subscriptions_stripe_subscription_idx').on(table.stripeSubscriptionId)]
+);
+
+/* ------------------- USAGE ------------------- */
+export const usage = pgTable(
+    'usage',
+    {
+        id: uuid('id').defaultRandom().primaryKey(),
+        userId: uuid('user_id')
+            .notNull()
+            .references(() => users.id, { onDelete: 'cascade' })
+            .unique(),
+        subscriptionId: uuid('subscription_id')
+            .notNull()
+            .references(() => subscriptions.id, { onDelete: 'cascade' }),
+
+        // Usage tracking fields
+        storageUsedBytes: bigint('storage_used_bytes', { mode: 'number' }).default(0).notNull(),
+        videoMinutesUsed: integer('video_minutes_used').default(0).notNull(),
+        audioMinutesTranscribed: integer('audio_minutes_transcribed').default(0).notNull(),
+        formsCreatedCount: integer('forms_created_count').default(0).notNull(),
+        submissionsCount: integer('submissions_count').default(0).notNull(),
+
+        createdAt: timestamp('created_at').defaultNow(),
+        updatedAt: timestamp('updated_at').defaultNow().notNull(),
+    },
+    (table) => [index('usage_user_idx').on(table.userId), index('usage_subscription_idx').on(table.subscriptionId)]
+);
+
+/* ------------------- LIMITS ------------------- */
+export const limits = pgTable(
+    'limits',
+    {
+        id: uuid('id').defaultRandom().primaryKey(),
+        userId: uuid('user_id')
+            .notNull()
+            .references(() => users.id, { onDelete: 'cascade' })
+            .unique(),
+        subscriptionId: uuid('subscription_id').references(() => subscriptions.id, { onDelete: 'set null' }),
+
+        // Limit fields (-1 = unlimited)
+        storageLimitBytes: bigint('storage_limit_bytes', { mode: 'number' }).default(10737418240).notNull(), // 10GB
+        formsLimit: integer('forms_limit').default(5).notNull(),
+        submissionsLimit: integer('submissions_limit').default(20).notNull(),
+        audioMinutesLimit: integer('audio_minutes_limit').default(120).notNull(),
+        videoMinutesLimit: integer('video_minutes_limit').default(0).notNull(),
+        videoIntelligenceEnabled: boolean('video_intelligence_enabled').default(false).notNull(),
+
+        createdAt: timestamp('created_at').defaultNow(),
+        updatedAt: timestamp('updated_at').defaultNow().notNull(),
+    },
+    (table) => [index('limits_user_idx').on(table.userId), index('limits_subscription_idx').on(table.subscriptionId)]
 );
 
 /* ------------------- FORMS ------------------- */
