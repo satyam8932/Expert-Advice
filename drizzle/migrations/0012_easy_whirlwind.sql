@@ -1,0 +1,1 @@
+ALTER TABLE "submissions" ADD COLUMN "files_size_id" uuid NOT NULL;

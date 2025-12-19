@@ -24,7 +24,7 @@ interface VideoUploaderProps {
     videoUrl: string;
     isUploading: boolean;
     onUploadStart: () => void;
-    onUploadComplete: (url: string) => void;
+    onUploadComplete: (data: { url: string; path: string; fileSubmissionId: string }) => void;
     onUploadError: (error: string) => void;
     formId: string;
 }
@@ -52,18 +52,17 @@ export default function VideoUploader({ videoUrl, isUploading, onUploadStart, on
             setUploadProgress(0);
             setCurrentFileName(file.name);
 
+            const fileSubmissionId = crypto.randomUUID();
             const fileExt = file.name.split('.').pop();
-            const fileName = `${formId}/${Date.now()}-${Math.random().toString(36).substring(7)}.${fileExt}`;
+            const fileName = `${formId}/${fileSubmissionId}/video.${fileExt}`;
             const bucketName = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET!;
 
             await uploadWithProgress(bucketName, fileName, file);
 
-            const {
-                data: { publicUrl },
-            } = supabaseClient.storage.from(bucketName).getPublicUrl(fileName);
+            const { data: { publicUrl } } = supabaseClient.storage.from(bucketName).getPublicUrl(fileName);
 
             setUploadProgress(100);
-            onUploadComplete(publicUrl);
+            onUploadComplete({ url: publicUrl, path: fileName, fileSubmissionId });
             toast.success('Video uploaded successfully!');
         } catch (err: any) {
             console.error('Upload error:', err);
@@ -184,7 +183,7 @@ export default function VideoUploader({ videoUrl, isUploading, onUploadStart, on
     }
 
     function removeVideo() {
-        onUploadComplete('');
+        onUploadComplete({ url: '', path: '', fileSubmissionId: '' });
         setError(null);
         setCurrentFileName('');
         setUploadProgress(0);

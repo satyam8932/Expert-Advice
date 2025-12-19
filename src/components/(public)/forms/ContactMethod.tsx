@@ -70,7 +70,6 @@ export default function ContactMethod({ email, phone, onEmailChange, onPhoneChan
                         Phone Number
                     </Label>
                     <PhoneInputField value={phone as Value} onChange={handlePhoneChange} error={errors.phone} />
-                    {isPhoneError && <p className="text-xs text-red-500 mt-1">{errors.phone}</p>}
                 </div>
             </div>
 

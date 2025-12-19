@@ -1,0 +1,1 @@
+ALTER TABLE "submissions" ADD COLUMN "files_size" bigint DEFAULT 0 NOT NULL;

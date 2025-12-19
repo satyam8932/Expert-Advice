@@ -64,6 +64,34 @@
       "when": 1765980248496,
       "tag": "0008_optimal_solo",
       "breakpoints": true
+    },
+    {
+      "idx": 9,
+      "version": "7",
+      "when": 1766055765283,
+      "tag": "0009_bouncy_namorita",
+      "breakpoints": true
+    },
+    {
+      "idx": 10,
+      "version": "7",
+      "when": 1766075595342,
+      "tag": "0010_curious_squadron_supreme",
+      "breakpoints": true
+    },
+    {
+      "idx": 11,
+      "version": "7",
+      "when": 1766077044712,
+      "tag": "0011_glorious_union_jack",
+      "breakpoints": true
+    },
+    {
+      "idx": 12,
+      "version": "7",
+      "when": 1766077423010,
+      "tag": "0012_easy_whirlwind",
+      "breakpoints": true
     }
   ]
 }

@@ -2,12 +2,14 @@ export interface CollectionFormData {
     firstName: string;
     lastName: string;
     zipcode: string;
-    helpType: 'labour' | 'storage' | 'both' | '';
+    helpType: string;
     contactMethod: 'email' | 'phone' | '';
     email: string;
     phone: string;
     countryCode: string;
     videoUrl: string;
+    videoUrlPath: string;
+    fileSubmissionId: string;
     videoUploading: boolean;
 }
 

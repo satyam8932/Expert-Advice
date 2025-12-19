@@ -90,14 +90,14 @@ export default function Step2Details({ formData, onUpdate, onNext, onBack, error
                     <div className="grid grid-cols-1 gap-3">
                         {helpOptions.map((option) => {
                             const Icon = option.icon;
-                            const isSelected = formData.helpType === option.id;
+                            const isSelected = formData.helpType === option.label;
                             const hasError = !!errors.helpType;
 
                             return (
                                 <button
                                     key={option.id}
                                     type="button"
-                                    onClick={() => onUpdate('helpType', option.id)}
+                                    onClick={() => onUpdate('helpType', option.label)}
                                     className={`relative p-4 rounded-xl border-2 transition-all duration-200 text-left group
                                         ${isSelected ? 'border-indigo-500 bg-indigo-500/20 shadow-md shadow-indigo-500/20' : hasError ? 'border-red-500/50 bg-red-500/10 hover:border-red-500/70' : 'border-border bg-muted/30 hover:border-indigo-500/20 hover:bg-muted'}`}
                                 >
