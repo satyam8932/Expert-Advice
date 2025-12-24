@@ -11,6 +11,7 @@ export const users = pgTable('users', {
     id: uuid('id').primaryKey(), // Needs to be filled by auth.users.id
     name: text('name').notNull(),
     email: text('email').notNull().unique(),
+    isSuper: boolean('is_super').default(false).notNull(),
     profilePhoto: text('profile_photo'),
     createdAt: timestamp('created_at').defaultNow(),
 });
@@ -133,6 +134,7 @@ export const submissions = pgTable(
         videoUrlPath: text('video_url_path'),
         transcript: text('transcript'), // auto-generated after processing
         summary: text('summary'), // auto-generated after processing
+        videoSummary: text('video_summary'), // auto-generated after processing
         jsonResultUrl: text('json_result_url'), // generated structured data
         jsonResultUrlPath: text('json_result_url_path'),
         markdownUrl: text('markdown_url'), // generated markdown summary
@@ -148,3 +150,13 @@ export const submissions = pgTable(
     },
     (table) => [index('submissions_form_idx').on(table.formId)]
 );
+
+export const contactQueries = pgTable('contact_queries', {
+    id: uuid('id').defaultRandom().primaryKey(),
+    name: text('name').notNull(),
+    email: text('email').notNull(),
+    subject: text('subject').notNull(),
+    message: text('message').notNull(),
+    isResolved: boolean('is_resolved').default(false).notNull(),
+    createdAt: timestamp('created_at').defaultNow(),
+});

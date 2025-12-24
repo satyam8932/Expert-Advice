@@ -2,13 +2,18 @@
 
 import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
-import { LayoutDashboard, FileText, Send, CreditCard, Settings, HelpCircle, LogOut, Ghost } from 'lucide-react';
+import { LayoutDashboard, FileText, Send, CreditCard, HelpCircle, LogOut, Ghost, Shield } from 'lucide-react';
 import { ThemeToggle } from '@/components/theme-toggle';
-import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 import { supabaseClient } from '@/supabase/client';
 
-export default function Sidebar({ isCollapsed, onToggle }: { isCollapsed: boolean; onToggle: () => void }) {
+interface SidebarProps {
+    isCollapsed: boolean;
+    onToggle: () => void;
+    isAdmin: boolean;
+}
+
+export default function Sidebar({ isCollapsed, onToggle, isAdmin }: SidebarProps) {
     const pathname = usePathname();
     const router = useRouter();
 
@@ -23,11 +28,15 @@ export default function Sidebar({ isCollapsed, onToggle }: { isCollapsed: boolea
         { icon: FileText, label: 'Forms', href: '/dashboard/forms' },
         { icon: Send, label: 'Submissions', href: '/dashboard/submissions' },
         { icon: CreditCard, label: 'Billings', href: '/dashboard/billings' },
-        { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
+        // { icon: Settings, label: 'Settings', href: '/dashboard/settings' },
     ];
 
+    if (isAdmin) {
+        mainItems.push({ icon: Shield, label: 'Admin', href: '/dashboard/admin' });
+    }
+
     const bottomItems = [
-        { icon: HelpCircle, label: 'Help & Information', href: '/dashboard/help' },
+        { icon: HelpCircle, label: 'Help & Information', href: '/contact' },
         { icon: LogOut, label: 'Log out', onClick: handleLogout },
     ];
 

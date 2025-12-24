@@ -60,14 +60,14 @@ export default function UserDropdown({ user, onLogout }: UserDropdownProps) {
                     Billings
                 </DropdownMenuItem>
 
-                <DropdownMenuItem onClick={() => router.push('/dashboard/settings')} className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground rounded-lg hover:bg-accent cursor-pointer transition-colors">
+                {/* <DropdownMenuItem onClick={() => router.push('/dashboard/settings')} className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground rounded-lg hover:bg-accent cursor-pointer transition-colors">
                     <Settings className="h-4 w-4 text-muted-foreground" />
                     Settings
-                </DropdownMenuItem>
+                </DropdownMenuItem> */}
 
                 <DropdownMenuSeparator className="bg-border my-2" />
 
-                <DropdownMenuItem onClick={() => router.push('/dashboard/help')} className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground rounded-lg hover:bg-accent cursor-pointer transition-colors">
+                <DropdownMenuItem onClick={() => router.push('/contact')} className="flex items-center gap-3 px-3 py-2.5 text-sm font-medium text-foreground rounded-lg hover:bg-accent cursor-pointer transition-colors">
                     <HelpCircle className="h-4 w-4 text-muted-foreground" />
                     Help center
                 </DropdownMenuItem>

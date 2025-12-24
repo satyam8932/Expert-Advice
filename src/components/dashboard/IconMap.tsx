@@ -1,6 +1,6 @@
 'use client';
 
-import { FileText, Send, DollarSign, TrendingUp, Users, Zap, LucideIcon } from 'lucide-react';
+import { FileText, Send, DollarSign, TrendingUp, Users, Zap, HardDrive, Mic, Video, LucideIcon } from 'lucide-react';
 
 export const iconMap: Record<string, LucideIcon> = {
     FileText,
@@ -9,6 +9,9 @@ export const iconMap: Record<string, LucideIcon> = {
     TrendingUp,
     Users,
     Zap,
+    HardDrive,
+    Mic,
+    Video,
 };
 
 export const getIcon = (name: string) => {

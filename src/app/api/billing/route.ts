@@ -69,6 +69,7 @@ export async function GET() {
                       })
                     : null,
                 stripeCustomerId: userSubscription.stripeCustomerId,
+                videoIntelligenceEnabled: actualLimits.video_intelligence,
             },
             usage: {
                 storage: {

@@ -7,6 +7,7 @@ import { Video, FileJson, FileCode, Calendar, CheckCircle, XCircle, Download, Ey
 import { format } from 'date-fns';
 import { SubmissionStatus, SubmissionDisplayData } from '@/lib/types/submission.types';
 import DeleteSubmissionButton from './DeleteSubmissionButton';
+import ProcessAIButton from './ProcessAIButton';
 import { useSubmissionsStore } from '@/store/submissions.store';
 import { PendingDots } from './PendingDots';
 import { useFileActions } from './hooks/useFileActions';
@@ -87,7 +88,7 @@ export default function SubmissionsTable({ search = '' }: { search?: string }) {
     return (
         <TooltipProvider>
             <Card className="border-none shadow-none bg-transparent flex flex-col flex-1 w-full">
-                <CardContent className="p-0 flex flex-col flex-1 w-full overflow-hidden">
+                <CardContent className="p-0 flex flex-col flex-1 w-full">
                     {/* Added overflow-x-auto to the table wrapper to prevent page breaking */}
                     <div className="relative overflow-x-auto rounded-2xl border border-border bg-card/40 backdrop-blur-md shadow-2xl flex-1">
                         <table className="w-full text-left text-sm border-separate border-spacing-0 min-w-[600px] sm:min-w-full">
@@ -98,8 +99,8 @@ export default function SubmissionsTable({ search = '' }: { search?: string }) {
                                     <th className="px-4 sm:px-6 py-4 sm:py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 border-b border-border">Status</th>
                                     <th className="px-4 sm:px-6 py-4 sm:py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 border-b border-border hidden sm:table-cell text-center">Timeline</th>
                                     <th className="px-4 sm:px-6 py-4 sm:py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 border-b border-border hidden md:table-cell">Resource Assets</th>
-                                    <th className="px-4 sm:px-6 py-4 sm:py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 border-b border-border text-right">Details</th>
-                                    <th className="px-4 sm:px-6 py-4 sm:py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 border-b border-border text-right">Settings</th>
+                                    <th className="px-4 sm:px-6 py-4 sm:py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 border-b border-border text-left">Details</th>
+                                    <th className="px-4 sm:px-6 py-4 sm:py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 border-b border-border text-right">Actions</th>
                                 </tr>
                             </thead>
 
@@ -158,15 +159,15 @@ export default function SubmissionsTable({ search = '' }: { search?: string }) {
                                                     </div>
                                                 </td>
 
-                                                <td className="px-4 sm:px-6 py-4 sm:py-5 text-right">
+                                                <td className="px-4 sm:px-6 py-4 sm:py-5 text-left">
                                                     <div className={cn('inline-flex p-1 rounded-full border transition-all duration-500 bg-background shadow-sm sm:p-1.5', expanded ? 'rotate-90 border-primary text-primary' : 'text-muted-foreground')}>
                                                         <ChevronRight className="w-3 h-3 sm:w-4 sm:h-4" />
                                                     </div>
                                                 </td>
 
                                                 <td className="px-4 sm:px-6 py-4 sm:py-5 text-right" onClick={(e) => e.stopPropagation()}>
-                                                    {/* Made the delete button always visible on touch devices for better accessibility */}
-                                                    <div className="flex justify-end opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                                                    <div className="flex justify-end items-center gap-1 sm:gap-2 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
+                                                        {!sub.videoSummary && <ProcessAIButton submissionId={sub.id} videoUrl={sub.videoUrl} />}
                                                         <DeleteSubmissionButton submissionId={sub.id} videoUrl={sub.videoUrl} jsonResultUrl={sub.jsonResultUrl} markdownUrl={sub.markdownUrl} />
                                                     </div>
                                                 </td>
@@ -176,7 +177,7 @@ export default function SubmissionsTable({ search = '' }: { search?: string }) {
                                                 <tr className="bg-primary/[0.01]">
                                                     <td colSpan={7} className="px-4 sm:px-8 py-6 sm:py-10 border-b border-border/50">
                                                         <div className="animate-in fade-in slide-in-from-top-4 duration-500">
-                                                            <SubmissionDetails data={sub.data} transcript={sub.transcript} summary={sub.summary} errorMessage={sub.errorMessage} />
+                                                            <SubmissionDetails data={sub.data} transcript={sub.transcript} summary={sub.summary} videoSummary={sub.videoSummary} errorMessage={sub.errorMessage} />
                                                         </div>
                                                     </td>
                                                 </tr>

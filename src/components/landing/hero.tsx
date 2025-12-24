@@ -1,4 +1,4 @@
-import { ArrowRight, PlayCircle, FileJson, ScanLine } from 'lucide-react';
+import { ArrowRight, PlayCircle, FileJson, ScanLine, BadgeQuestionMark } from 'lucide-react';
 import Link from 'next/link';
 
 export function Hero() {
@@ -33,9 +33,9 @@ export function Hero() {
                     <Link href="/auth/signup" className="w-full sm:w-auto h-12 px-8 rounded-lg bg-indigo-600 text-white font-semibold flex items-center justify-center gap-2 hover:bg-indigo-500 transition-all active:scale-95 shadow-lg shadow-indigo-600/30">
                         Start Free Trial <ArrowRight className="w-4 h-4" />
                     </Link>
-                    <button className="w-full sm:w-auto h-12 px-8 rounded-lg bg-muted border border-border text-foreground font-medium hover:bg-accent transition-all flex items-center justify-center gap-2">
-                        <PlayCircle className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Watch Demo
-                    </button>
+                    <Link href="/contact" className="w-full sm:w-auto h-12 px-8 rounded-lg bg-muted border border-border text-foreground font-medium hover:bg-accent transition-all flex items-center justify-center gap-2">
+                        <BadgeQuestionMark className="w-4 h-4 text-indigo-600 dark:text-indigo-400" /> Questions?
+                    </Link>
                 </div>
 
                 {/* Visual Mockup - Responsive Grid Layout */}

@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { User, Mail, Phone, MapPin, HelpCircle, ScrollText, FileText, AlertCircle } from 'lucide-react';
+import { User, Mail, Phone, MapPin, HelpCircle, ScrollText, FileText, AlertCircle, Sparkles } from 'lucide-react';
 
 interface SubmissionDetailsProps {
     data: {
@@ -12,6 +12,7 @@ interface SubmissionDetailsProps {
     };
     transcript: string | null;
     summary: string | null;
+    videoSummary: string | null;
     errorMessage: string | null;
 }
 
@@ -34,7 +35,7 @@ const Field = memo(function Field({ icon, label, value, capitalize }: FieldProps
     );
 });
 
-export const SubmissionDetails = memo(function SubmissionDetails({ data, transcript, summary, errorMessage }: SubmissionDetailsProps) {
+export const SubmissionDetails = memo(function SubmissionDetails({ data, transcript, summary, videoSummary, errorMessage }: SubmissionDetailsProps) {
     return (
         <div className="space-y-6">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -46,7 +47,7 @@ export const SubmissionDetails = memo(function SubmissionDetails({ data, transcr
                 <Field icon={<HelpCircle className="w-4 h-4" />} label="Help Type" value={data.help_type} capitalize />
             </div>
 
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+            <div className={`grid grid-cols-1 ${videoSummary ? 'lg:grid-cols-3' : 'lg:grid-cols-2'} gap-4`}>
                 <div className="flex flex-col gap-3 p-5 rounded-lg bg-card border border-border hover:border-blue-500/30 transition-all duration-200">
                     <div className="flex items-center gap-2 text-blue-400">
                         <ScrollText className="w-5 h-5" />
@@ -74,6 +75,22 @@ export const SubmissionDetails = memo(function SubmissionDetails({ data, transcr
                         />
                     </div>
                 </div>
+
+                {videoSummary && (
+                    <div className="flex flex-col gap-3 p-5 rounded-lg bg-card border border-border hover:border-violet-500/30 transition-all duration-200">
+                        <div className="flex items-center gap-2 text-violet-400">
+                            <Sparkles className="w-5 h-5" />
+                            <span className="text-sm font-semibold uppercase tracking-wide">AI Video Summary</span>
+                        </div>
+                        <div className="relative">
+                            <textarea
+                                readOnly
+                                value={videoSummary}
+                                className="w-full text-sm text-foreground/90 bg-muted/50 px-4 py-3 rounded-lg border border-border resize-none min-h-[300px] font-sans leading-relaxed focus:outline-none focus:ring-2 focus:ring-violet-500/50 focus:border-violet-500/50 transition-all"
+                            />
+                        </div>
+                    </div>
+                )}
             </div>
 
             {errorMessage && (

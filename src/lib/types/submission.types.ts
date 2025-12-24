@@ -3,10 +3,11 @@ export interface SubmissionRow {
     id: string;
     user_id: string;
     form_id: string;
-    data: Record<string, any>; // jsonb field
+    data: Record<string, any>;
     video_url: string | null;
     transcript: string | null;
     summary: string | null;
+    video_summary: string | null;
     json_result_url: string | null;
     markdown_url: string | null;
     status: SubmissionStatus;
@@ -24,6 +25,7 @@ export interface SubmissionDisplayData {
     videoUrl: string | null;
     transcript: string | null;
     summary: string | null;
+    videoSummary: string | null;
     jsonResultUrl: string | null;
     markdownUrl: string | null;
     status: SubmissionStatus;

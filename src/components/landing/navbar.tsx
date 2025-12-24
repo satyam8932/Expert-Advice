@@ -34,6 +34,9 @@ export function Navbar() {
                     <Link href="#pricing" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
                         Pricing
                     </Link>
+                    <Link href="/contact" className="text-sm font-medium text-muted-foreground hover:text-foreground transition-colors">
+                        Contact Us
+                    </Link>
                 </nav>
 
                 {/* Desktop Actions */}

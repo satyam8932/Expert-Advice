@@ -40,6 +40,7 @@ export interface SubscriptionDisplay {
     price: string;
     nextBillingDate: string | null;
     stripeCustomerId: string | null;
+    videoIntelligenceEnabled?: boolean;
 }
 
 export interface UsageDisplay {

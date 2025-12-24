@@ -55,6 +55,9 @@ export function Footer() {
                         <Link href="#" className="text-sm text-muted-foreground hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">
                             Terms of Service
                         </Link>
+                        <Link href="/contact" className="text-sm text-muted-foreground hover:text-indigo-500 dark:hover:text-indigo-400 transition-colors">
+                            Contact Us
+                        </Link>
                     </div>
                 </div>
 
