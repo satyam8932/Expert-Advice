@@ -80,7 +80,11 @@ export const validateStep3 = (formData: CollectionFormData): ValidationErrors =>
     const errors: ValidationErrors = {};
 
     const hasEmail = formData.email.trim().length > 0;
-    const hasPhone = formData.phone.trim().length > 0;
+
+    // Check if phone has actual digits (not just country code)
+    // Country codes are typically 1-4 digits, so if cleaned phone has more than 4 digits, user entered something
+    const cleanedPhone = formData.phone.replace(/\D/g, '');
+    const hasPhone = cleanedPhone.length > 4; // More than just country code
 
     // Require at least one contact method
     if (!hasEmail && !hasPhone) {
@@ -92,7 +96,7 @@ export const validateStep3 = (formData: CollectionFormData): ValidationErrors =>
         errors.email = 'Please enter a valid email address';
     }
 
-    // Validate phone format if provided
+    // Validate phone format if provided (only if user actually entered digits)
     if (hasPhone && !validatePhone(formData.phone)) {
         errors.phone = 'Please enter a valid phone number (min 10 digits)';
     }

@@ -109,12 +109,12 @@ export default function Step3Contact({ formData, onUpdate, onSubmit, onBack, loa
                 </div>
             </div>
 
-            <div className="flex gap-3 pt-4">
-                <Button variant="outline" onClick={onBack} size="lg" disabled={loading} className="px-6 border-border bg-muted hover:bg-muted/80 text-foreground">
+            <div className="flex justify-center gap-3 pt-4">
+                <Button variant="outline" onClick={onBack} size="lg" disabled={loading} className="max-w-xs px-6 border-border bg-muted hover:bg-muted/80 text-foreground">
                     <ArrowLeft className="mr-2 w-5 h-5" />
                     Back
                 </Button>
-                <Button onClick={handleSubmit} disabled={loading} size="lg" className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-base font-semibold shadow-lg shadow-indigo-600/30 transition-all active:scale-95">
+                <Button onClick={handleSubmit} disabled={loading} size="lg" className="max-w-xs bg-indigo-600 hover:bg-indigo-500 text-base font-semibold shadow-lg shadow-indigo-600/30 transition-all active:scale-95">
                     {loading ? (
                         <>
                             <Loader2 className="mr-2 w-5 h-5 animate-spin" />
@@ -122,7 +122,7 @@ export default function Step3Contact({ formData, onUpdate, onSubmit, onBack, loa
                         </>
                     ) : (
                         <>
-                            Submit & Get Expert Advice
+                            Get Expert Advice
                             <Check className="ml-2 w-5 h-5" />
                         </>
                     )}

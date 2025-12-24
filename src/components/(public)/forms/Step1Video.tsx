@@ -73,10 +73,17 @@ export default function Step1Video({ formData, onUpdate, onNext, errors, setErro
                     </div>
                 </div>
 
-                <Button onClick={handleNext} disabled={formData.videoUploading || !formData.videoUrl} size="lg" className="w-full bg-indigo-600 hover:bg-indigo-500 px-8 text-base font-semibold shadow-lg shadow-indigo-600/30 transition-all active:scale-95 disabled:opacity-50 disabled:shadow-none">
-                    Continue to Details
-                    <ArrowRight className="ml-2 w-5 h-5" />
-                </Button>
+                <div className="flex justify-center">
+                    <Button
+                        onClick={handleNext}
+                        disabled={formData.videoUploading || !formData.videoUrl}
+                        size="lg"
+                        className="max-w-md bg-indigo-600 hover:bg-indigo-500 px-8 text-base font-semibold shadow-lg shadow-indigo-600/30 transition-all active:scale-95 disabled:opacity-50 disabled:shadow-none"
+                    >
+                        Continue to Details
+                        <ArrowRight className="ml-2 w-5 h-5" />
+                    </Button>
+                </div>
             </div>
         </div>
     );

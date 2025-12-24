@@ -125,12 +125,12 @@ export default function Step2Details({ formData, onUpdate, onNext, onBack, error
                 </div>
             </div>
 
-            <div className="flex gap-3 pt-4">
-                <Button variant="outline" onClick={onBack} size="lg" className="px-6 border-border bg-muted hover:bg-muted/80 text-foreground">
+            <div className="flex justify-center gap-3 pt-4">
+                <Button variant="outline" onClick={onBack} size="lg" className="max-w-xs px-6 border-border bg-muted hover:bg-muted/80 text-foreground">
                     <ArrowLeft className="mr-2 w-5 h-5" />
                     Back
                 </Button>
-                <Button onClick={handleNext} size="lg" className="flex-1 bg-indigo-600 hover:bg-indigo-500 text-base font-semibold shadow-lg shadow-indigo-600/30 transition-all active:scale-95">
+                <Button onClick={handleNext} size="lg" className="max-w-xs bg-indigo-600 hover:bg-indigo-500 text-base font-semibold shadow-lg shadow-indigo-600/30 transition-all active:scale-95">
                     Continue
                     <ArrowRight className="ml-2 w-5 h-5" />
                 </Button>
