@@ -50,10 +50,32 @@ async function getDashboardData(userId: string) {
     const usageData = userUsage[0];
     const limitsData = userLimits[0];
 
-    // Calculate storage usage percentage
-    const storageUsedGB = usageData ? Number(usageData.storageUsedBytes) / (1024 * 1024 * 1024) : 0;
-    const storageLimitGB = limitsData ? Number(limitsData.storageLimitBytes) / (1024 * 1024 * 1024) : 10;
-    const storagePercentage = limitsData ? Math.round((Number(usageData?.storageUsedBytes || 0) / Number(limitsData.storageLimitBytes)) * 100) : 0;
+    // Helper function to format storage size
+    const formatStorageSize = (bytes: number) => {
+        const gb = bytes / (1024 * 1024 * 1024);
+        const mb = bytes / (1024 * 1024);
+
+        // If less than 1 GB, show in MB
+        if (gb < 1) {
+            return {
+                value: mb.toFixed(2),
+                unit: 'MB',
+            };
+        }
+        // Otherwise show in GB
+        return {
+            value: gb.toFixed(2),
+            unit: 'GB',
+        };
+    };
+
+    // Calculate storage usage
+    const storageUsedBytes = usageData ? Number(usageData.storageUsedBytes) : 0;
+    const storageLimitBytes = limitsData ? Number(limitsData.storageLimitBytes) : 10737418240; // 10GB default
+    const storagePercentage = Math.round((storageUsedBytes / storageLimitBytes) * 100);
+
+    const storageUsed = formatStorageSize(storageUsedBytes);
+    const storageLimit = formatStorageSize(storageLimitBytes);
 
     // Calculate audio minutes percentage
     const audioMinutesUsed = usageData ? Number(usageData.audioMinutesTranscribed) : 0;
@@ -93,8 +115,8 @@ async function getDashboardData(userId: string) {
             },
             {
                 label: 'Storage Used',
-                value: `${storageUsedGB.toFixed(2)} GB`,
-                subtitle: `${storagePercentage}% of ${storageLimitGB.toFixed(0)} GB`,
+                value: `${storageUsed.value} ${storageUsed.unit}`,
+                subtitle: `${storagePercentage}% of ${storageLimit.value} ${storageLimit.unit}`,
                 iconName: 'HardDrive',
                 color: 'yellow' as const,
             },
@@ -119,8 +141,8 @@ async function getDashboardData(userId: string) {
         },
         usage: {
             storage: {
-                used: storageUsedGB,
-                limit: storageLimitGB,
+                used: storageUsedBytes / (1024 * 1024 * 1024), // Convert to GB for compatibility
+                limit: storageLimitBytes / (1024 * 1024 * 1024), // Convert to GB for compatibility
                 percentage: storagePercentage,
             },
             forms: {

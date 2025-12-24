@@ -1,10 +1,8 @@
 'use client';
 
-import { Zap, Check, ArrowRight, Sparkles } from 'lucide-react';
-import { Button } from '@/components/ui/button';
+import { Zap, Check, Sparkles, Info } from 'lucide-react';
 import { Card } from '@/components/ui/card';
 import { useState } from 'react';
-import { toast } from 'sonner';
 
 interface UpgradeSectionProps {
     yearlyDiscountPercent: number;
@@ -13,15 +11,14 @@ interface UpgradeSectionProps {
 const proFeatures = [
     { icon: Zap, text: '20 active forms', highlight: true },
     { icon: Zap, text: '100 form submissions', highlight: true },
-    { icon: Zap, text: '600 minutes of audio transcription' },
+    { icon: Zap, text: '600 minutes of audio transcription', highlight: true },
     { icon: Sparkles, text: '300 minutes of video intelligence', highlight: true },
-    { icon: Check, text: '50 GB storage' },
-    { icon: Check, text: 'Priority support' },
+    { icon: Check, text: '50 GB storage', highlight: true },
+    { icon: Check, text: 'Priority support', highlight: true },
 ];
 
 export function UpgradeSection({ yearlyDiscountPercent }: UpgradeSectionProps) {
     const [isYearly, setIsYearly] = useState(false);
-    const [loading, setLoading] = useState(false);
 
     const getYearlyPrice = (monthlyPrice: number) => {
         return monthlyPrice * (1 - yearlyDiscountPercent / 100);
@@ -29,30 +26,6 @@ export function UpgradeSection({ yearlyDiscountPercent }: UpgradeSectionProps) {
 
     const monthlyPrice = 69; // Pro plan monthly price
     const displayPrice = isYearly ? getYearlyPrice(monthlyPrice) : monthlyPrice;
-
-    const handleUpgrade = async () => {
-        setLoading(true);
-        try {
-            const res = await fetch('/api/billing/portal', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-            });
-
-            const data = await res.json();
-
-            if (data.error) {
-                toast.error(data.error);
-                setLoading(false);
-                return;
-            }
-
-            // Redirect to Stripe Billing Portal
-            window.location.href = data.url;
-        } catch (error) {
-            toast.error('Failed to open billing portal');
-            setLoading(false);
-        }
-    };
 
     return (
         <Card className="bg-gradient-to-br from-indigo-50/50 to-purple-50/50 dark:from-indigo-950/20 dark:to-purple-950/20 border-indigo-200 dark:border-indigo-800 shadow-sm">
@@ -106,17 +79,18 @@ export function UpgradeSection({ yearlyDiscountPercent }: UpgradeSectionProps) {
                     ))}
                 </div>
 
-                {/* CTA Button */}
-                <Button onClick={handleUpgrade} disabled={loading} className="w-full h-12 text-base font-semibold bg-indigo-600 hover:bg-indigo-700 text-white shadow-md shadow-indigo-200 dark:shadow-indigo-900/20 transition-all group">
-                    {loading ? (
-                        'Opening Billing Portal...'
-                    ) : (
-                        <>
-                            Manage Subscription
-                            <ArrowRight className="w-5 h-5 ml-2 group-hover:translate-x-1 transition-transform" />
-                        </>
-                    )}
-                </Button>
+                {/* Instructions Box */}
+                <div className="bg-indigo-500/10 border border-indigo-500/20 rounded-lg p-4">
+                    <div className="flex gap-3">
+                        <Info className="w-5 h-5 text-indigo-600 dark:text-indigo-400 flex-shrink-0 mt-0.5" />
+                        <div className="space-y-1">
+                            <p className="text-sm font-semibold text-foreground">How to upgrade</p>
+                            <p className="text-xs text-muted-foreground leading-relaxed">
+                                Click the <span className="font-semibold text-indigo-600 dark:text-indigo-400">"Manage Subscription"</span> button in your Current Plan card above. You'll be redirected to the Stripe billing portal where you can upgrade your plan, update payment methods, and manage all subscription settings.
+                            </p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </Card>
     );
