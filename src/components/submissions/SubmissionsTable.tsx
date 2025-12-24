@@ -31,8 +31,31 @@ const getStatusTheme = (status: SubmissionStatus) => {
     }
 };
 
-const FileActionButton = ({ icon: Icon, label, color, onDownload, onPreview, url, type }: any) => {
+const FileActionButton = ({ icon: Icon, label, color, onDownload, onPreview, url, type, submissionData }: any) => {
     if (!url) return null;
+
+    const generateFilename = () => {
+        const firstName = submissionData?.first_name || 'Unknown';
+        const lastName = submissionData?.last_name || 'User';
+        const phone = submissionData?.phone;
+        const email = submissionData?.email;
+
+        let identifier = '';
+        if (phone) {
+            const digits = phone.replace(/\D/g, '');
+            identifier = digits.slice(-4);
+        } else if (email) {
+            identifier = email.split('@')[0];
+        } else {
+            identifier = 'nocontact';
+        }
+
+        const extension = type === 'markdown' ? 'md' : type === 'json' ? 'json' : 'mp4';
+        return `${firstName}-${lastName}-${identifier}.${extension}`;
+    };
+
+    const filename = generateFilename();
+
     return (
         <div className="flex items-center gap-1 p-0.5 sm:gap-1.5 sm:p-1 rounded-lg bg-secondary/50 border border-border/50 hover:border-primary/30 transition-all group/btn">
             <div className={cn('p-1 sm:p-1.5 rounded-md bg-background shadow-sm', color)}>
@@ -56,7 +79,7 @@ const FileActionButton = ({ icon: Icon, label, color, onDownload, onPreview, url
                     title={`Download ${label}`}
                     onClick={(e) => {
                         e.stopPropagation();
-                        onDownload(url);
+                        onDownload(url, filename);
                     }}
                     className="p-1 hover:bg-primary/10 hover:text-primary rounded transition-colors"
                 >
@@ -153,9 +176,9 @@ export default function SubmissionsTable({ search = '' }: { search?: string }) {
 
                                                 <td className="px-4 sm:px-6 py-4 sm:py-5 hidden md:table-cell">
                                                     <div className="flex flex-wrap gap-1.5">
-                                                        <FileActionButton label="Video" type="video" icon={Video} color="text-indigo-500" url={sub.videoUrl} onDownload={handleDownload} onPreview={handlePreview} />
-                                                        <FileActionButton label="Data" type="json" icon={FileJson} color="text-emerald-500" url={sub.jsonResultUrl} onDownload={handleDownload} onPreview={handlePreview} />
-                                                        <FileActionButton label="Doc" type="markdown" icon={FileText} color="text-sky-500" url={sub.markdownUrl} onDownload={handleDownload} onPreview={handlePreview} />
+                                                        <FileActionButton label="Video" type="video" icon={Video} color="text-indigo-500" url={sub.videoUrl} onDownload={handleDownload} onPreview={handlePreview} submissionData={sub.data} />
+                                                        <FileActionButton label="Data" type="json" icon={FileJson} color="text-emerald-500" url={sub.jsonResultUrl} onDownload={handleDownload} onPreview={handlePreview} submissionData={sub.data} />
+                                                        <FileActionButton label="Doc" type="markdown" icon={FileText} color="text-sky-500" url={sub.markdownUrl} onDownload={handleDownload} onPreview={handlePreview} submissionData={sub.data} />
                                                     </div>
                                                 </td>
 
