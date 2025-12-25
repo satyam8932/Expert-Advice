@@ -87,29 +87,29 @@ async function getDashboardData(userId: string) {
     const videoMinutesLimit = limitsData?.videoMinutesLimit || 0;
     const videoPercentage = videoMinutesLimit > 0 ? Math.round((videoMinutesUsed / videoMinutesLimit) * 100) : 0;
 
-    // Calculate forms usage percentage
-    const formsUsed = formsData.length;
+    // Calculate forms usage percentage (cumulative from usage table)
+    const formsUsed = usageData?.formsCreatedCount || 0;
     const formsLimit = limitsData?.formsLimit || 5;
     const formsPercentage = Math.round((formsUsed / formsLimit) * 100);
 
-    // Calculate submissions usage percentage
-    const submissionsUsed = submissionsData.length;
+    // Calculate submissions usage percentage (cumulative from usage table)
+    const submissionsUsed = usageData?.submissionsCount || 0;
     const submissionsLimit = limitsData?.submissionsLimit || 20;
     const submissionsPercentage = Math.round((submissionsUsed / submissionsLimit) * 100);
 
     return {
         stats: [
             {
-                label: 'Total Forms',
-                value: formsData.length.toString(),
-                subtitle: `${formsPercentage}% of ${formsLimit} limit`,
+                label: 'Forms Created',
+                value: formsUsed.toString(),
+                subtitle: `${formsPercentage}% of ${formsLimit} limit • ${formsData.length} active`,
                 iconName: 'FileText',
                 color: 'indigo' as const,
             },
             {
-                label: 'Total Submissions',
-                value: submissionsData.length.toString(),
-                subtitle: `${submissionsPercentage}% of ${submissionsLimit} limit`,
+                label: 'Submissions Created',
+                value: submissionsUsed.toString(),
+                subtitle: `${submissionsPercentage}% of ${submissionsLimit} limit • ${submissionsData.length} active`,
                 iconName: 'Send',
                 color: 'green' as const,
             },
@@ -146,11 +146,11 @@ async function getDashboardData(userId: string) {
                 percentage: storagePercentage,
             },
             forms: {
-                used: formsData.length,
+                used: formsUsed,
                 limit: limitsData?.formsLimit || 5,
             },
             submissions: {
-                used: submissionsData.length,
+                used: submissionsUsed,
                 limit: limitsData?.submissionsLimit || 20,
             },
             audioMinutes: {
