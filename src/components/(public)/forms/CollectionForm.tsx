@@ -36,7 +36,6 @@ export default function CollectionForm({ formId }: CollectionFormProps) {
         countryCode: '+1',
         videoUrl: '',
         videoUrlPath: '',
-        fileSubmissionId: '',
         videoUploading: false,
     });
 
@@ -62,9 +61,7 @@ export default function CollectionForm({ formId }: CollectionFormProps) {
                 email: formData.email || undefined,
                 phone: formData.phone || undefined,
                 countryCode: formData.phone ? formData.countryCode : undefined,
-                videoUrl: formData.videoUrl,
-                videoUrlPath: formData.videoUrlPath,
-                fileSubmissionId: formData.fileSubmissionId,
+                tempVideoPath: formData.videoUrlPath,
             };
 
             const response = await fetch('/api/submissions', {

@@ -12,12 +12,13 @@ export default async function SubmissionsPage() {
         data: { user },
     } = await supabase.auth.getUser();
 
-    const { data: submissionsRaw } = await supabase.from('submissions').select('*').eq('user_id', user!.id).order('created_at', { ascending: false });
+    const { data: submissionsRaw } = await supabase.from('submissions').select('*, forms(name)').eq('user_id', user!.id).order('created_at', { ascending: false });
 
     const submissions: SubmissionDisplayData[] = (submissionsRaw || []).map((row: SubmissionRow) => ({
         id: row.id,
         formId: row.form_id,
         userId: row.user_id,
+        formName: row.forms?.name || 'Unknown Form',
         data: row.data,
         videoUrl: row.video_url,
         transcript: row.transcript,

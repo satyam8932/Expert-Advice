@@ -1,4 +1,5 @@
 import { supabaseServer } from '@/supabase/server';
+import { supabaseAdmin } from '@/supabase/admin';
 import { NextResponse } from 'next/server';
 import { checkQuota } from '@/lib/quota/checker';
 import { incrementSubmissions } from '@/lib/usage/tracker';
@@ -8,12 +9,14 @@ export async function POST(req: Request) {
         const supabase = await supabaseServer();
         const body = await req.json();
 
-        const { formId, firstName, lastName, zipcode, helpType, contactMethod, email, phone, countryCode, videoUrl, videoUrlPath, fileSubmissionId } = body;
+        const { formId, firstName, lastName, zipcode, helpType, email, phone, countryCode, tempVideoPath } = body;
+
+        // Validate required fields
         if (!formId || !firstName || !lastName || !zipcode || !helpType) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
-        if (!videoUrl || !videoUrlPath || !fileSubmissionId) {
-            return NextResponse.json({ error: 'Video URL, path and file submission ID are required' }, { status: 400 });
+        if (!tempVideoPath) {
+            return NextResponse.json({ error: 'Video path is required' }, { status: 400 });
         }
         // Validate at least one contact method is provided
         if (!email && !phone) {
@@ -39,6 +42,26 @@ export async function POST(req: Request) {
             );
         }
 
+        const fileSubmissionId = crypto.randomUUID();
+        const fileExt = tempVideoPath.split('.').pop();
+        const permanentPath = `${formId}/${fileSubmissionId}/video.${fileExt}`;
+
+        const tempBucket = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_TEMP_BUCKET!;
+        const prodBucket = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET!;
+
+        const { error: moveError } = await supabaseAdmin.storage.from(tempBucket).move(tempVideoPath, permanentPath, {
+            destinationBucket: prodBucket,
+        });
+
+        if (moveError) {
+            console.error('Failed to move file from temp to production bucket:', moveError);
+            return NextResponse.json({ error: 'Failed to process video file: ' + moveError.message }, { status: 500 });
+        }
+
+        const {
+            data: { publicUrl: videoUrl },
+        } = supabaseAdmin.storage.from(prodBucket).getPublicUrl(permanentPath);
+
         const submissionData = {
             first_name: firstName,
             last_name: lastName,
@@ -58,7 +81,7 @@ export async function POST(req: Request) {
                     files_submission_id: fileSubmissionId,
                     data: submissionData,
                     video_url: videoUrl,
-                    video_url_path: videoUrlPath,
+                    video_url_path: permanentPath,
                     status: 'pending',
                 },
             ])

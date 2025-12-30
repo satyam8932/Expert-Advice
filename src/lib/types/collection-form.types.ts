@@ -9,7 +9,6 @@ export interface CollectionFormData {
     countryCode: string;
     videoUrl: string;
     videoUrlPath: string;
-    fileSubmissionId: string;
     videoUploading: boolean;
 }
 

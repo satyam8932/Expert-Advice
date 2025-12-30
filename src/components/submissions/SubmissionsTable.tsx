@@ -3,7 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
-import { Video, FileJson, FileCode, Calendar, CheckCircle, XCircle, Download, Eye, ChevronRight, FileText } from 'lucide-react';
+import { Video, FileJson, Calendar, CheckCircle, Download, Eye, ChevronRight, FileText } from 'lucide-react';
 import { format } from 'date-fns';
 import { SubmissionStatus, SubmissionDisplayData } from '@/lib/types/submission.types';
 import DeleteSubmissionButton from './DeleteSubmissionButton';
@@ -117,7 +117,7 @@ export default function SubmissionsTable({ search = '' }: { search?: string }) {
                         <table className="w-full text-left text-sm border-separate border-spacing-0 min-w-[600px] sm:min-w-full">
                             <thead>
                                 <tr className="bg-muted/40">
-                                    <th className="px-4 sm:px-6 py-4 sm:py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 border-b border-border hidden lg:table-cell">Identity</th>
+                                    <th className="px-4 sm:px-6 py-4 sm:py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 border-b border-border">Form Name</th>
                                     <th className="px-4 sm:px-6 py-4 sm:py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 border-b border-border">Customer Profile</th>
                                     <th className="px-4 sm:px-6 py-4 sm:py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 border-b border-border">Status</th>
                                     <th className="px-4 sm:px-6 py-4 sm:py-5 text-[10px] font-black uppercase tracking-[0.2em] text-muted-foreground/70 border-b border-border hidden sm:table-cell text-center">Timeline</th>
@@ -135,9 +135,12 @@ export default function SubmissionsTable({ search = '' }: { search?: string }) {
                                     return (
                                         <React.Fragment key={sub.id}>
                                             <tr className={cn('group hover:bg-primary/[0.02] transition-all duration-300 cursor-pointer', expanded && 'bg-primary/[0.03]')} onClick={() => toggleRow(sub.id)}>
-                                                <td className="px-4 sm:px-6 py-4 sm:py-5 hidden lg:table-cell">
-                                                    <Badge variant="secondary" className="font-mono text-[9px] opacity-60">
-                                                        #{sub.id.slice(0, 6)}
+                                                <td className="px-4 sm:px-6 py-4 sm:py-5">
+                                                    <Badge
+                                                        variant="secondary"
+                                                        className="text-[9px] font-semibold truncate max-w-[120px] block"
+                                                    >
+                                                        {sub.formName}
                                                     </Badge>
                                                 </td>
 

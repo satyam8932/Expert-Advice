@@ -45,7 +45,6 @@ export default function Step1Video({ formData, onUpdate, onNext, errors, setErro
                     onUploadComplete={(data) => {
                         onUpdate('videoUrl', data.url);
                         onUpdate('videoUrlPath', data.path);
-                        onUpdate('fileSubmissionId', data.fileSubmissionId);
                         onUpdate('videoUploading', false);
                     }}
                     onUploadError={() => onUpdate('videoUploading', false)}

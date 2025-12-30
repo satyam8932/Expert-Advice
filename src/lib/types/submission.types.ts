@@ -14,6 +14,7 @@ export interface SubmissionRow {
     error_message: string | null;
     processed_at: string | null;
     created_at: string;
+    forms?: { name: string };
 }
 
 // Display data for UI
@@ -21,6 +22,7 @@ export interface SubmissionDisplayData {
     id: string;
     formId: string;
     userId: string;
+    formName: string;
     data: Record<string, any>;
     videoUrl: string | null;
     transcript: string | null;

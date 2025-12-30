@@ -17,14 +17,14 @@ const PageWrapper = ({ children }: { children: React.ReactNode }) => (
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[90vw] max-w-[800px] h-[400px] bg-indigo-500/10 blur-[120px] rounded-full pointer-events-none" />
 
         <div className="relative z-10 w-full max-w-3xl animate-in fade-in zoom-in duration-500">
-            <div className="flex justify-center mb-8">
+            <div className="flex justify-center mb-4">
                 <div className="flex flex-col items-center gap-4">
                     <div className="w-14 h-14 rounded-2xl bg-indigo-500/10 flex items-center justify-center border border-indigo-500/20 backdrop-blur-sm">
                         <Ghost className="w-8 h-8 text-indigo-500" />
                     </div>
-                    <h2 className="text-lg font-bold tracking-tight">
+                    {/* <h2 className="text-lg font-bold tracking-tight">
                         <span className="text-muted-foreground font-light">Powered by</span> Advice<span className="text-indigo-500">Expert</span>.io
-                    </h2>
+                    </h2> */}
                 </div>
             </div>
 

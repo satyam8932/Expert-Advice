@@ -52,10 +52,10 @@ export default function VideoUploader({ videoUrl, isUploading, onUploadStart, on
             setUploadProgress(0);
             setCurrentFileName(file.name);
 
-            const fileSubmissionId = crypto.randomUUID();
+            const tempId = crypto.randomUUID();
             const fileExt = file.name.split('.').pop();
-            const fileName = `${formId}/${fileSubmissionId}/video.${fileExt}`;
-            const bucketName = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_BUCKET!;
+            const fileName = `temp/${formId}/${tempId}/video.${fileExt}`;
+            const bucketName = process.env.NEXT_PUBLIC_SUPABASE_STORAGE_TEMP_BUCKET!;
 
             await uploadWithProgress(bucketName, fileName, file);
 
@@ -64,7 +64,7 @@ export default function VideoUploader({ videoUrl, isUploading, onUploadStart, on
             } = supabaseClient.storage.from(bucketName).getPublicUrl(fileName);
 
             setUploadProgress(100);
-            onUploadComplete({ url: publicUrl, path: fileName, fileSubmissionId });
+            onUploadComplete({ url: publicUrl, path: fileName, fileSubmissionId: '' });
             toast.success('Video uploaded successfully!');
         } catch (err: any) {
             console.error('Upload error:', err);
