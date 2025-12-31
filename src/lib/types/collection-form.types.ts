@@ -1,7 +1,6 @@
 export interface CollectionFormData {
     firstName: string;
     lastName: string;
-    zipcode: string;
     helpType: string;
     contactMethod: 'email' | 'phone' | '';
     email: string;

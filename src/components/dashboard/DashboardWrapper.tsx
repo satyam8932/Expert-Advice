@@ -7,7 +7,7 @@ interface DashboardData {
     stats: {
         label: string;
         value: string;
-        subtitle: string;
+        subtitle?: string;
         iconName: string;
         color: 'indigo' | 'green' | 'yellow' | 'pink' | 'purple';
     }[];

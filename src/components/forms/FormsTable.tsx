@@ -4,11 +4,12 @@ import { useState } from 'react';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
-import { Copy, Trash2, MoreVertical, Pencil, CheckCircle, Search, Hash, Send, Calendar } from 'lucide-react';
+import { Copy, Trash2, MoreVertical, Pencil, CheckCircle, Search, Hash, Send, Calendar, Info } from 'lucide-react';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { useFormsStore } from '@/store/forms.store';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import EditFormDialog from './EditFormDialog';
 
 interface EditingForm {
@@ -92,7 +93,21 @@ export default function FormsTable() {
                                     />
                                 </th>
                                 <th className="p-4 text-left font-medium w-[40%] bg-card border-b border-border">Form Name</th>
-                                <th className="p-4 text-left font-medium w-[15%] hidden sm:table-cell bg-card border-b border-border">Submissions</th>
+                                <th className="p-4 text-left font-medium w-[15%] hidden sm:table-cell bg-card border-b border-border">
+                                    <TooltipProvider>
+                                        <Tooltip>
+                                            <TooltipTrigger asChild>
+                                                <div className="flex items-center gap-1.5 cursor-help">
+                                                    Submissions
+                                                    <Info className="w-3.5 h-3.5 text-muted-foreground hover:text-indigo-400 transition-colors" />
+                                                </div>
+                                            </TooltipTrigger>
+                                            <TooltipContent side="top" className="max-w-xs">
+                                                <p className="text-xs">Total submissions received (includes both active and deleted submissions)</p>
+                                            </TooltipContent>
+                                        </Tooltip>
+                                    </TooltipProvider>
+                                </th>
                                 <th className="p-4 text-left font-medium w-[15%] bg-card border-b border-border">Status</th>
                                 <th className="p-4 text-left font-medium w-[15%] hidden lg:table-cell bg-card border-b border-border">Created</th>
                                 <th className="p-4 text-left font-medium w-[10%] bg-card border-b border-border">Link</th>

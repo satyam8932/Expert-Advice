@@ -1,5 +1,5 @@
 'use client';
-import { ArrowRight, Video, FileText } from 'lucide-react';
+import { ArrowRight, FileText } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import VideoUploader from './VideoUploader';
 import { CollectionFormData } from '@/lib/types/collection-form.types';
@@ -29,14 +29,6 @@ export default function Step1Video({ formData, onUpdate, onNext, errors, setErro
 
     return (
         <div className="space-y-10 animate-in fade-in slide-in-from-right-4 duration-300">
-            <div className="text-center">
-                <div className="inline-flex items-center justify-center p-3 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-3">
-                    <Video className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
-                </div>
-                <h2 className="text-2xl font-bold text-foreground mb-2">Take a video and show us how we can help</h2>
-                <p className="text-muted-foreground max-w-sm mx-auto">While you are videoing tell us what's moving, what's staying, and what's storing.</p>
-            </div>
-
             <div className="space-y-4">
                 <VideoUploader
                     videoUrl={formData.videoUrl}

@@ -9,10 +9,10 @@ export async function POST(req: Request) {
         const supabase = await supabaseServer();
         const body = await req.json();
 
-        const { formId, firstName, lastName, zipcode, helpType, email, phone, countryCode, tempVideoPath } = body;
+        const { formId, firstName, lastName, helpType, email, phone, countryCode, tempVideoPath } = body;
 
         // Validate required fields
-        if (!formId || !firstName || !lastName || !zipcode || !helpType) {
+        if (!formId || !firstName || !lastName || !helpType) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
         if (!tempVideoPath) {
@@ -65,7 +65,6 @@ export async function POST(req: Request) {
         const submissionData = {
             first_name: firstName,
             last_name: lastName,
-            zipcode,
             help_type: helpType,
             email: email || null,
             phone: phone || null,

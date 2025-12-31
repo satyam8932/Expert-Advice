@@ -3,7 +3,6 @@ import { CollectionFormData } from '@/lib/types/collection-form.types';
 export interface ValidationErrors {
     firstName?: string;
     lastName?: string;
-    zipcode?: string;
     helpType?: string;
     contactMethod?: string;
     email?: string;
@@ -34,10 +33,6 @@ export const validatePhone = (phone: string): boolean => {
     return cleaned.length >= 10;
 };
 
-export const validateZipcode = (zipcode: string): boolean => {
-    return zipcode.trim().length >= 5 && /^[0-9]{5,}$/.test(zipcode);
-};
-
 export const validateStep1 = (formData: CollectionFormData): ValidationErrors => {
     const errors: ValidationErrors = {};
 
@@ -61,12 +56,6 @@ export const validateStep2 = (formData: CollectionFormData): ValidationErrors =>
         errors.lastName = 'Last name is required';
     } else if (formData.lastName.trim().length < 2) {
         errors.lastName = 'Last name must be at least 2 characters';
-    }
-
-    if (!formData.zipcode.trim()) {
-        errors.zipcode = 'Zipcode is required';
-    } else if (!validateZipcode(formData.zipcode)) {
-        errors.zipcode = 'Please enter a valid zipcode (min 5 digits)';
     }
 
     if (!formData.helpType) {

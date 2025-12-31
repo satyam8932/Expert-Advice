@@ -37,15 +37,6 @@ export default function Step3Contact({ formData, onUpdate, onSubmit, onBack, loa
 
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
-            <div className="text-center">
-                <div className="inline-flex items-center justify-center p-3 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-3">
-                    <Mail className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
-                </div>
-                <h2 className="text-2xl font-bold text-foreground mb-2">Get Free Local Expert Advice</h2>
-                <p className="text-muted-foreground max-w-sm mx-auto">How can we reach you?</p>
-                <p className="text-muted-foreground max-w-sm mx-auto">Zero spam, We are actual people and here to help!</p>
-            </div>
-
             <ContactMethod email={formData.email} phone={formData.phone} onEmailChange={(v) => onUpdate('email', v)} onPhoneChange={(v) => onUpdate('phone', v)} errors={errors} />
 
             <div className="bg-muted/30 border border-border rounded-xl p-6">
@@ -64,13 +55,6 @@ export default function Step3Contact({ formData, onUpdate, onSubmit, onBack, loa
                         <span className="text-sm text-foreground font-semibold capitalize">
                             {formData.firstName} {formData.lastName}
                         </span>
-                    </div>
-
-                    <div className="flex justify-between items-center py-2 border-b border-border">
-                        <span className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-                            <Info className="w-4 h-4 text-muted-foreground" /> Zipcode
-                        </span>
-                        <span className="text-sm text-foreground font-semibold">{formData.zipcode}</span>
                     </div>
 
                     <div className="flex justify-between items-center py-2 border-b border-border">

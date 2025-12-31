@@ -1,5 +1,5 @@
 'use client';
-import { ArrowRight, ArrowLeft, Package, Users, Info } from 'lucide-react';
+import { ArrowRight, ArrowLeft, Package, Users, PackageOpen } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -17,8 +17,8 @@ interface Step2DetailsProps {
 }
 
 const helpOptions: HelpOption[] = [
-    { id: 'labour', label: 'Moving Labour', icon: Users, desc: 'Professional movers and assistance' },
-    { id: 'storage', label: 'Moving and Storage Container', icon: Package, desc: 'Portable moving container rental' },
+    { id: 'storage', label: 'Moving and Storage Container', icon: PackageOpen, desc: 'Portable moving container rental' },
+    { id: 'labour', label: 'Moving Labor', icon: Users, desc: 'Professional movers and assistance' },
     { id: 'both', label: 'Both Services', icon: Package, desc: 'Complete moving solution package' },
 ];
 
@@ -38,14 +38,6 @@ export default function Step2Details({ formData, onUpdate, onNext, onBack, error
 
     return (
         <div className="space-y-8 animate-in fade-in slide-in-from-right-4 duration-300">
-            <div className="text-center">
-                <div className="inline-flex items-center justify-center p-3 rounded-full bg-indigo-500/10 border border-indigo-500/20 mb-3">
-                    <Info className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
-                </div>
-                <h2 className="text-2xl font-bold text-foreground mb-2">How can we help</h2>
-                <p className="text-muted-foreground max-w-sm mx-auto">Tell us what you need assistance with.</p>
-            </div>
-
             <div className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                     <div className="space-y-2">
@@ -62,25 +54,6 @@ export default function Step2Details({ formData, onUpdate, onNext, onBack, error
                         <Input id="lastName" value={formData.lastName} onChange={(e) => onUpdate('lastName', e.target.value)} placeholder="Doe" className={inputClasses('lastName')} />
                         {errors.lastName && <p className="text-xs text-red-500 mt-1">{errors.lastName}</p>}
                     </div>
-                </div>
-
-                <div className="space-y-2">
-                    <Label htmlFor="zipcode" className="text-sm font-medium text-foreground">
-                        Delivery Zipcode <span className="text-red-500">*</span>
-                    </Label>
-                    <Input
-                        id="zipcode"
-                        type="text"
-                        inputMode="numeric"
-                        value={formData.zipcode}
-                        onChange={(e) => {
-                            const value = e.target.value.replace(/\D/g, '');
-                            onUpdate('zipcode', value);
-                        }}
-                        placeholder="Enter your zipcode"
-                        className={inputClasses('zipcode')}
-                    />
-                    {errors.zipcode && <p className="text-xs text-red-500 mt-1">{errors.zipcode}</p>}
                 </div>
 
                 <div className="space-y-3">

@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { User, Mail, Phone, MapPin, HelpCircle, ScrollText, FileText, AlertCircle, Sparkles } from 'lucide-react';
+import { User, Mail, Phone, HelpCircle, ScrollText, FileText, AlertCircle, Sparkles } from 'lucide-react';
 
 interface SubmissionDetailsProps {
     data: {
@@ -7,7 +7,6 @@ interface SubmissionDetailsProps {
         last_name?: string;
         email?: string;
         phone?: string;
-        zipcode?: string;
         help_type?: string;
     };
     transcript: string | null;
@@ -43,7 +42,6 @@ export const SubmissionDetails = memo(function SubmissionDetails({ data, transcr
                 <Field icon={<User className="w-4 h-4" />} label="Last Name" value={data.last_name} />
                 <Field icon={<Mail className="w-4 h-4" />} label="Email" value={data.email} />
                 <Field icon={<Phone className="w-4 h-4" />} label="Phone" value={data.phone} />
-                <Field icon={<MapPin className="w-4 h-4" />} label="Zipcode" value={data.zipcode} />
                 <Field icon={<HelpCircle className="w-4 h-4" />} label="Help Type" value={data.help_type} capitalize />
             </div>
 

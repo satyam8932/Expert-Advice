@@ -87,29 +87,29 @@ async function getDashboardData(userId: string) {
     const videoMinutesLimit = limitsData?.videoMinutesLimit || 0;
     const videoPercentage = videoMinutesLimit > 0 ? Math.round((videoMinutesUsed / videoMinutesLimit) * 100) : 0;
 
-    // Calculate forms usage percentage (cumulative from usage table)
-    const formsUsed = usageData?.formsCreatedCount || 0;
+    // Calculate forms usage percentage (actual current count from forms table)
+    const formsUsed = formsData.length; // Current active forms
     const formsLimit = limitsData?.formsLimit || 5;
     const formsPercentage = Math.round((formsUsed / formsLimit) * 100);
 
-    // Calculate submissions usage percentage (cumulative from usage table)
-    const submissionsUsed = usageData?.submissionsCount || 0;
+    // Calculate submissions usage percentage (actual current count from submissions table)
+    const submissionsUsed = submissionsData.length; // Current active submissions
     const submissionsLimit = limitsData?.submissionsLimit || 20;
     const submissionsPercentage = Math.round((submissionsUsed / submissionsLimit) * 100);
 
     return {
         stats: [
             {
-                label: 'Forms Created',
+                label: 'Forms',
                 value: formsUsed.toString(),
-                subtitle: `${formsPercentage}% of ${formsLimit} limit • ${formsData.length} active`,
+                subtitle: 'Total present',
                 iconName: 'FileText',
                 color: 'indigo' as const,
             },
             {
-                label: 'Submissions Created',
+                label: 'Submissions',
                 value: submissionsUsed.toString(),
-                subtitle: `${submissionsPercentage}% of ${submissionsLimit} limit • ${submissionsData.length} active`,
+                subtitle: 'Total present',
                 iconName: 'Send',
                 color: 'green' as const,
             },

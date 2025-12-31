@@ -1,7 +1,7 @@
 'use client';
 import { useState } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
-import StepIndicator from './StepIndicator';
+// import StepIndicator from './StepIndicator';
 import Step1Video from './Step1Video';
 import Step2Details from './Step2Details';
 import Step3Contact from './Step3Contact';
@@ -10,11 +10,11 @@ import { ValidationErrors } from '@/lib/utils/validation';
 import { toast } from 'sonner';
 import { FormSubmitted } from './FormSubmitted';
 
-const steps: StepConfig[] = [
-    { number: 1, title: 'Video', desc: 'One click video upload' },
-    { number: 2, title: 'Details', desc: 'Tell us how we can help' },
-    { number: 3, title: 'Contact', desc: 'Get free expert advice' },
-];
+// const steps: StepConfig[] = [
+//     { number: 1, title: 'Video', desc: 'One click video upload' },
+//     { number: 2, title: 'Details', desc: 'Tell us how we can help' },
+//     { number: 3, title: 'Contact', desc: 'Get free expert advice' },
+// ];
 
 interface CollectionFormProps {
     formId: string;
@@ -28,7 +28,6 @@ export default function CollectionForm({ formId }: CollectionFormProps) {
     const [formData, setFormData] = useState<CollectionFormData>({
         firstName: '',
         lastName: '',
-        zipcode: '',
         helpType: '',
         contactMethod: '',
         email: '',
@@ -56,7 +55,6 @@ export default function CollectionForm({ formId }: CollectionFormProps) {
                 formId,
                 firstName: formData.firstName,
                 lastName: formData.lastName,
-                zipcode: formData.zipcode,
                 helpType: formData.helpType,
                 email: formData.email || undefined,
                 phone: formData.phone || undefined,
@@ -94,12 +92,33 @@ export default function CollectionForm({ formId }: CollectionFormProps) {
 
     return (
         <div className="w-full overflow-x-hidden">
-            <div className="mb-10 text-center">
+            <div className="mb-8 text-center">
                 <h1 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-500 to-purple-500 mb-3">Get Free Expert Advice... Easy as 1-2-3</h1>
                 <p className="text-muted-foreground text-lg">Analysis Powered by People and a little AI but mostly people</p>
             </div>
 
-            <StepIndicator steps={steps} currentStep={step} />
+            {/* <StepIndicator steps={steps} currentStep={step} /> */}
+
+            <div className="text-center mb-8">
+                {step === 1 && (
+                    <>
+                        <h2 className="text-lg font-medium text-foreground/80 mb-1.5">Take a video and show us how we can help</h2>
+                        <p className="text-sm text-muted-foreground/80 max-w-md mx-auto">While you are videoing tell us what's moving, what's staying, and what's storing.</p>
+                    </>
+                )}
+                {step === 2 && (
+                    <>
+                        <h2 className="text-lg font-medium text-foreground/80 mb-1.5">How can we help</h2>
+                        <p className="text-sm text-muted-foreground/80 max-w-md mx-auto">Tell us what you need assistance with.</p>
+                    </>
+                )}
+                {step === 3 && (
+                    <>
+                        <h2 className="text-lg font-medium text-foreground/80 mb-1.5">Get Free Local Expert Advice</h2>
+                        <p className="text-sm text-muted-foreground/80 max-w-md mx-auto">How can we reach you? Zero spam, we are actual people here to help!</p>
+                    </>
+                )}
+            </div>
 
             <Card className="bg-card border border-border shadow-xl mt-6">
                 <CardContent className="p-6 md:p-10">

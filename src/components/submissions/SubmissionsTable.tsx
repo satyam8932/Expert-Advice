@@ -136,10 +136,7 @@ export default function SubmissionsTable({ search = '' }: { search?: string }) {
                                         <React.Fragment key={sub.id}>
                                             <tr className={cn('group hover:bg-primary/[0.02] transition-all duration-300 cursor-pointer', expanded && 'bg-primary/[0.03]')} onClick={() => toggleRow(sub.id)}>
                                                 <td className="px-4 sm:px-6 py-4 sm:py-5">
-                                                    <Badge
-                                                        variant="secondary"
-                                                        className="text-[9px] font-semibold truncate max-w-[120px] block"
-                                                    >
+                                                    <Badge variant="secondary" className="text-[9px] font-semibold truncate max-w-[120px] block">
                                                         {sub.formName}
                                                     </Badge>
                                                 </td>

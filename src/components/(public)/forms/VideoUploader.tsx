@@ -228,9 +228,10 @@ export default function VideoUploader({ videoUrl, isUploading, onUploadStart, on
                     )}
 
                     {!isUploading && (
-                        <div className="relative grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div className="relative flex justify-center">
+                            {/* UPLOAD FUNCTIONALITY COMMENTED OUT - Only recording is enabled */}
                             {/* Upload Box */}
-                            <div
+                            {/* <div
                                 onDrop={onDrop}
                                 onDragOver={onDragOver}
                                 onDragLeave={onDragLeave}
@@ -249,20 +250,20 @@ export default function VideoUploader({ videoUrl, isUploading, onUploadStart, on
                                     </div>
                                 </div>
                                 <input ref={uploadInputRef} onChange={(e) => handleFile(e.target.files || undefined)} accept="video/*" type="file" className="hidden" />
-                            </div>
+                            </div> */}
 
                             {/* OR Divider */}
-                            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden sm:flex items-center justify-center z-10">
+                            {/* <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 hidden sm:flex items-center justify-center z-10">
                                 <div className="bg-card px-3 py-1.5 rounded-full border border-border shadow-sm">
                                     <span className="text-sm font-semibold text-muted-foreground">OR</span>
                                 </div>
                             </div>
                             <div className="sm:hidden flex items-center justify-center -my-2">
                                 <span className="bg-card px-3 py-1 rounded-full border border-border text-xs font-semibold text-muted-foreground">OR</span>
-                            </div>
+                            </div> */}
 
-                            {/* Record Box */}
-                            <div onClick={() => setSelectedSource('record')} className="relative border-2 border-dashed rounded-xl p-6 text-center transition-all duration-200 cursor-pointer border-border bg-muted/30 hover:border-indigo-500/50 hover:bg-muted">
+                            {/* Record Box - Now the only option */}
+                            <div onClick={() => setSelectedSource('record')} className="relative border-2 border-dashed rounded-xl p-8 text-center transition-all duration-200 cursor-pointer border-border bg-muted/30 hover:border-indigo-500/50 hover:bg-muted max-w-md w-full">
                                 <div className="flex flex-col items-center gap-3">
                                     <div className="p-3 rounded-full transition-colors border border-border bg-muted">
                                         <Camera className="w-6 h-6 text-indigo-500 dark:text-indigo-400" />
