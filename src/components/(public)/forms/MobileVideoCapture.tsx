@@ -11,9 +11,26 @@ interface MobileVideoCaptureProps {
 export default function MobileVideoCapture({ onVideoCapture, onCancel }: MobileVideoCaptureProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
-    const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
         if (file && file.type.startsWith('video/')) {
+            // Check video size against limit
+            const maxSizeMB = parseInt(process.env.NEXT_PUBLIC_MAX_VIDEO_SIZE_MB || '50', 10);
+            const maxSizeBytes = maxSizeMB * 1024 * 1024;
+
+            if (file.size > maxSizeBytes) {
+                const fileSizeMB = (file.size / 1024 / 1024).toFixed(1);
+                const { toast } = await import('sonner');
+                toast.error(`Video size (${fileSizeMB}MB) exceeds the ${maxSizeMB}MB limit. Please record a shorter video.`, {
+                    duration: 6000,
+                });
+                // Reset the input so user can try again
+                if (fileInputRef.current) {
+                    fileInputRef.current.value = '';
+                }
+                return;
+            }
+
             onVideoCapture(file);
         }
     };
@@ -32,6 +49,7 @@ export default function MobileVideoCapture({ onVideoCapture, onCancel }: MobileV
                     <div>
                         <p className="text-lg font-semibold text-foreground mb-1">Record Video</p>
                         <p className="text-sm text-muted-foreground">Tap below to open your camera</p>
+                        <p className="text-xs text-muted-foreground mt-1">Max {process.env.NEXT_PUBLIC_MAX_VIDEO_SIZE_MB || '50'}MB recording size</p>
                     </div>
                 </div>
             </div>

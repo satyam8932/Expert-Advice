@@ -66,6 +66,21 @@ export default function VideoRecorder({ onRecordingComplete, onCancel }: VideoRe
         if (mediaBlobUrl) {
             const response = await fetch(mediaBlobUrl);
             const blob = await response.blob();
+
+            // Check video size against limit
+            const maxSizeMB = parseInt(process.env.NEXT_PUBLIC_MAX_VIDEO_SIZE_MB || '50', 10);
+            const maxSizeBytes = maxSizeMB * 1024 * 1024;
+
+            if (blob.size > maxSizeBytes) {
+                const fileSizeMB = (blob.size / 1024 / 1024).toFixed(1);
+                const { toast } = await import('sonner');
+                toast.error(`Video size (${fileSizeMB}MB) exceeds the ${maxSizeMB}MB limit. Please record a shorter video.`, {
+                    duration: 6000,
+                });
+                handleRetake(); // Clear the recording so user can try again
+                return;
+            }
+
             const file = new File([blob], `recorded-video-${Date.now()}.webm`, {
                 type: 'video/webm',
             });

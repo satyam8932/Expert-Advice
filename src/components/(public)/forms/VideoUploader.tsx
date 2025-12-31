@@ -271,7 +271,7 @@ export default function VideoUploader({ videoUrl, isUploading, onUploadStart, on
                                     <div>
                                         <p className="font-semibold text-base mb-1 text-foreground">Record Now</p>
                                         <p className="text-xs text-muted-foreground">Use your camera</p>
-                                        <p className="text-xs text-muted-foreground mt-0.5">Instant capture</p>
+                                        <p className="text-xs text-muted-foreground mt-0.5">Max {process.env.NEXT_PUBLIC_MAX_VIDEO_SIZE_MB || '50'}MB recording size</p>
                                     </div>
                                 </div>
                             </div>

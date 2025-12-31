@@ -29,7 +29,7 @@ export async function POST(req: Request) {
         const userId = user.id;
 
         // Fetch submission data to get formId, filesSubmissionId, and videoUrl
-        const { data: submission } = await supabase.from('submissions').select('form_id, files_submission_id, video_url').eq('id', submissionId).eq('user_id', userId).single();
+        const { data: submission } = await supabase.from('submissions').select('form_id, files_submission_id, video_url, id').eq('id', submissionId).eq('user_id', userId).single();
 
         if (!submission) {
             return NextResponse.json({ error: 'Submission not found' }, { status: 404 });
@@ -109,6 +109,7 @@ export async function POST(req: Request) {
                     userId,
                     fileSubmissionId: submission.files_submission_id,
                     videoUrl: submission.video_url,
+                    submissionId: submission.id,
                 }),
             });
 
