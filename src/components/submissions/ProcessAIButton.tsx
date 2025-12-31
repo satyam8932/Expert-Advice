@@ -2,13 +2,15 @@ import { useState } from 'react';
 import { Sparkles, Loader2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { AlertDialog, AlertDialogAction, AlertDialogCancel, AlertDialogContent, AlertDialogDescription, AlertDialogFooter, AlertDialogHeader, AlertDialogTitle, AlertDialogTrigger } from '@/components/ui/alert-dialog';
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip';
 import { toast } from 'sonner';
 
 interface ProcessAIButtonProps {
     submissionId: string;
+    disabled?: boolean;
 }
 
-export default function ProcessAIButton({ submissionId }: ProcessAIButtonProps) {
+export default function ProcessAIButton({ submissionId, disabled = false }: ProcessAIButtonProps) {
     const [isProcessing, setIsProcessing] = useState(false);
     const [isOpen, setIsOpen] = useState(false);
 
@@ -54,12 +56,25 @@ export default function ProcessAIButton({ submissionId }: ProcessAIButtonProps) 
         }
     };
 
+    const buttonContent = (
+        <Button variant="ghost" size="icon" className="text-violet-500 hover:text-violet-400 hover:bg-violet-500/10 transition-all disabled:opacity-50 disabled:cursor-not-allowed" disabled={disabled}>
+            <Sparkles className="w-4 h-4" />
+        </Button>
+    );
+
     return (
         <AlertDialog open={isOpen} onOpenChange={setIsOpen}>
             <AlertDialogTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-violet-500 hover:text-violet-400 hover:bg-violet-500/10 transition-all">
-                    <Sparkles className="w-4 h-4" />
-                </Button>
+                {disabled ? (
+                    <Tooltip>
+                        <TooltipTrigger asChild>{buttonContent}</TooltipTrigger>
+                        <TooltipContent>
+                            <p className="text-xs">Submission must be completed before AI processing</p>
+                        </TooltipContent>
+                    </Tooltip>
+                ) : (
+                    buttonContent
+                )}
             </AlertDialogTrigger>
             <AlertDialogContent className="bg-card border border-border">
                 <AlertDialogHeader>
